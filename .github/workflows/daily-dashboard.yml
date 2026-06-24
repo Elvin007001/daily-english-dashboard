@@ -33,12 +33,19 @@ jobs:
         run: npm install
 
       - name: Generate dashboard with AI
+        if: ${{ secrets.OPENAI_API_KEY != '' }}
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-4.1-mini' }}
         run: npm run generate:dashboard
 
+      - name: Use existing dashboard when AI secret is missing
+        if: ${{ secrets.OPENAI_API_KEY == '' }}
+        run: |
+          echo "OPENAI_API_KEY is not configured. Deploying the existing dashboard without AI update."
+
       - name: Commit updated dashboard
+        if: ${{ secrets.OPENAI_API_KEY != '' }}
         run: |
           git config user.name "daily-dashboard-bot"
           git config user.email "daily-dashboard-bot@users.noreply.github.com"
