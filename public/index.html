@@ -1,66 +1,231 @@
-<!doctype html>
-<html lang="az" class="no-js">
+﻿<!doctype html>
+<html lang="az">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-title" content="English Dashboard">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <title>Premium English Vocabulary Lab - Gün 3</title>
+  <title>Premium English Vocabulary Lab - Gün 2</title>
   <style>
-    :root { --ink:#172033; --muted:#667085; --card:#fff; --line:#e6e9f2; --blue:#315cff; --teal:#008c7a; --gold:#b7791f; --rose:#c2415d; --green:#12b76a; --red:#f04438; --shadow:0 20px 50px rgba(17,24,39,.12); }
-    * { box-sizing:border-box; }
-    body { margin:0; font-family: Georgia, "Segoe UI", sans-serif; color:var(--ink); background:radial-gradient(circle at 10% 5%, rgba(49,92,255,.20), transparent 28rem), radial-gradient(circle at 95% 12%, rgba(0,140,122,.18), transparent 30rem), linear-gradient(135deg,#f8fbff,#fffaf0); min-height:100vh; }
-    .shell { width:min(1180px, calc(100% - 28px)); margin:0 auto; padding:28px 0 48px; }
-    .hero { color:white; background:linear-gradient(135deg, rgba(23,32,51,.97), rgba(49,92,255,.84)), radial-gradient(circle at 88% 10%, rgba(255,215,128,.45), transparent 20rem); border-radius:26px; padding:34px; box-shadow:var(--shadow); }
-    .hero-top, .section-header { display:flex; justify-content:space-between; gap:18px; align-items:flex-start; flex-wrap:wrap; }
-    .eyebrow { letter-spacing:.08em; text-transform:uppercase; font-size:12px; opacity:.78; margin:0 0 10px; }
-    h1 { font-size:clamp(32px, 5vw, 58px); line-height:1; margin:0; max-width:760px; }
-    h2, h3 { margin-top:0; }
-    .hero-note { max-width:720px; color:rgba(255,255,255,.80); line-height:1.65; }
-    .date-card { min-width:220px; border:1px solid rgba(255,255,255,.28); background:rgba(255,255,255,.13); border-radius:18px; padding:18px; backdrop-filter:blur(10px); }
-    .date-card strong { display:block; font-size:26px; margin:6px 0; }
-    .stats, .dashboard-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin-top:24px; }
-    .dashboard-grid { grid-template-columns:repeat(3,minmax(0,1fr)); margin:0; padding:22px; }
-    .stat, .feature-card, .module-card, .review-card { border-radius:18px; padding:16px; border:1px solid rgba(255,255,255,.22); background:rgba(255,255,255,.14); }
-    .stat span { display:block; color:rgba(255,255,255,.75); font-size:13px; margin-bottom:8px; }
-    .stat strong { font-size:24px; }
-    .section { margin-top:22px; background:var(--card); border:1px solid var(--line); border-radius:22px; box-shadow:0 12px 30px rgba(17,24,39,.06); overflow:hidden; }
-    .section-header { align-items:center; padding:20px 22px; border-bottom:1px solid var(--line); }
-    .pill { border-radius:999px; padding:7px 12px; font-size:12px; font-weight:800; white-space:nowrap; background:#eef3ff; color:var(--blue); }
-    .feature-card, .module-card, .review-card { background:linear-gradient(135deg,#fff,#fbfcff); border-color:var(--line); }
-    .progress-track { height:12px; background:#edf1f7; border-radius:999px; overflow:hidden; margin-top:12px; }
-    .progress-fill { height:100%; width:var(--value); background:linear-gradient(90deg,var(--blue),var(--teal)); border-radius:inherit; }
-    .level-band { display:flex; gap:8px; margin-top:12px; }
-    .level { flex:1; border-radius:999px; padding:8px 10px; text-align:center; font-size:12px; font-weight:800; color:#475467; background:#f2f4f7; }
-    .level.active { color:white; background:linear-gradient(135deg,var(--blue),var(--teal)); }
-    table { width:100%; border-collapse:collapse; }
-    th,td { padding:15px 18px; text-align:left; border-bottom:1px solid var(--line); vertical-align:top; }
-    th { color:var(--muted); font-size:12px; text-transform:uppercase; letter-spacing:.05em; background:#fbfcff; }
-    code { color:#101828; background:#f2f4f7; border-radius:8px; padding:3px 7px; font-family:Consolas,monospace; font-size:13px; }
-    .review-grid, .flip-grid, .difficult-list, .module-grid, .quiz-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; padding:22px; }
-    .review-list { display:grid; gap:8px; margin:0; padding:0; list-style:none; }
-    .review-list li { display:flex; justify-content:space-between; gap:12px; border:1px solid var(--line); border-radius:12px; padding:10px 12px; background:#fff; }
-    .note { color:var(--muted); line-height:1.6; }
-    .flip-card { display:block; width:100%; min-height:160px; perspective:900px; cursor:pointer; outline:0; }
-    .flip-card:focus-visible { outline:3px solid rgba(49,92,255,.35); outline-offset:4px; border-radius:18px; }
-    .flip-inner { display:block; position:relative; min-height:160px; border-radius:18px; transform-style:preserve-3d; transition:transform 360ms ease; box-shadow:0 12px 26px rgba(17,24,39,.08); }
-    .flip-card.is-flipped .flip-inner { transform:rotateY(180deg); }
-    .flip-face { position:absolute; inset:0; backface-visibility:hidden; border-radius:18px; padding:18px; border:1px solid var(--line); background:white; overflow:hidden; }
-    .flip-back { transform:rotateY(180deg); background:linear-gradient(135deg,#eef3ff,#e9fbf7); }
-    .pronunciation { display:inline-block; margin-top:10px; color:#344054; background:#f8fafc; border-radius:999px; padding:6px 10px; font-size:12px; font-weight:700; }
-    .question { border:1px solid #f3d6df; background:linear-gradient(135deg,#fff7f9,#fff); border-radius:18px; padding:18px; }
-    .options { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; margin-top:14px; }
-    .option { border:1px solid var(--line); border-radius:14px; padding:12px 14px; background:white; color:var(--ink); cursor:pointer; font:inherit; text-align:left; }
-    .option.correct { border-color:var(--green); background:#dcfae6; color:#05603a; }
-    .option.wrong { border-color:var(--red); background:#fff1f0; color:#b42318; }
-    .answer-feedback { display:none; margin-top:14px; border-radius:14px; padding:12px 14px; font-weight:800; }
-    .answer-feedback.success { display:block; color:#05603a; background:#dcfae6; }
-    .answer-feedback.retry { display:block; color:#b42318; background:#fff1f0; }
-    .word-chip { border:1px solid #ffd6d3; background:#fff7f6; color:#b42318; border-radius:16px; padding:14px; font-weight:800; }
-    .certificate { padding:28px; background:linear-gradient(135deg,rgba(183,121,31,.16),rgba(49,92,255,.10)),#fff; }
-    .certificate-card { border:1px solid rgba(183,121,31,.32); border-radius:22px; padding:26px; background:linear-gradient(135deg,#fffaf0,#fff); box-shadow:0 16px 34px rgba(183,121,31,.12); }
-    @media (max-width:760px) { .shell{width:min(100% - 20px,1180px); padding-top:14px;} .hero{padding:24px;} .stats,.dashboard-grid,.review-grid,.flip-grid,.difficult-list,.options,.module-grid,.quiz-grid{grid-template-columns:1fr;} table{display:block; overflow-x:auto;} th,td{padding:12px;} }
+    :root {
+      --ink: #172033;
+      --muted: #667085;
+      --card: #ffffff;
+      --line: #e6e9f2;
+      --blue: #335cff;
+      --teal: #008c7a;
+      --gold: #b7791f;
+      --rose: #c2415d;
+      --green: #12b76a;
+      --red: #f04438;
+      --shadow: 0 20px 50px rgba(17, 24, 39, 0.11);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, Segoe UI, Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 12% 8%, rgba(51, 92, 255, 0.22), transparent 32rem),
+        radial-gradient(circle at 90% 14%, rgba(0, 140, 122, 0.18), transparent 30rem),
+        radial-gradient(circle at 70% 92%, rgba(183, 121, 31, 0.18), transparent 26rem),
+        linear-gradient(135deg, #f8fbff 0%, #f6f7fb 52%, #fffaf0 100%);
+      min-height: 100vh;
+    }
+
+    .shell { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 32px 0 48px; }
+
+    .hero {
+      color: white;
+      background:
+        linear-gradient(135deg, rgba(23, 32, 51, 0.96), rgba(51, 92, 255, 0.84)),
+        radial-gradient(circle at 88% 10%, rgba(255, 215, 128, 0.50), transparent 21rem);
+      border-radius: 24px;
+      padding: 34px;
+      box-shadow: var(--shadow);
+    }
+
+    .hero-top { display: flex; justify-content: space-between; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+    .eyebrow { letter-spacing: 0.08em; text-transform: uppercase; font-size: 12px; opacity: 0.78; margin: 0 0 10px; }
+    h1 { font-size: clamp(32px, 5vw, 58px); line-height: 1; margin: 0; max-width: 760px; }
+    .hero-note { color: rgba(255, 255, 255, 0.78); max-width: 720px; line-height: 1.6; }
+
+    .date-card {
+      min-width: 220px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      background: rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      padding: 18px;
+      backdrop-filter: blur(10px);
+    }
+
+    .date-card strong { display: block; font-size: 26px; margin: 6px 0; }
+    .stats, .dashboard-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-top: 24px; }
+    .dashboard-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); padding: 22px; margin-top: 0; }
+
+    .stat, .feature-card {
+      background: rgba(255, 255, 255, 0.13);
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .feature-card { background: linear-gradient(135deg, #ffffff, #fbfcff); border-color: var(--line); }
+    .stat span { display: block; color: rgba(255, 255, 255, 0.74); font-size: 13px; margin-bottom: 8px; }
+    .stat strong { font-size: 24px; }
+
+    .section {
+      margin-top: 22px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      box-shadow: 0 12px 30px rgba(17, 24, 39, 0.06);
+      overflow: hidden;
+    }
+
+    .section-header { display: flex; justify-content: space-between; gap: 16px; align-items: center; padding: 20px 22px; border-bottom: 1px solid var(--line); }
+    .section-header h2 { margin: 0; font-size: 20px; }
+    .pill { border-radius: 999px; padding: 7px 12px; font-size: 12px; font-weight: 800; white-space: nowrap; }
+    .blue .pill { color: var(--blue); background: #eef3ff; }
+    .teal .pill { color: var(--teal); background: #e9fbf7; }
+    .gold .pill { color: var(--gold); background: #fff7df; }
+
+    .progress-track { height: 12px; background: #edf1f7; border-radius: 999px; overflow: hidden; margin-top: 12px; }
+    .progress-fill { height: 100%; width: var(--value); background: linear-gradient(90deg, var(--blue), var(--teal)); border-radius: inherit; }
+    .level-band { display: flex; gap: 8px; margin-top: 12px; }
+    .level { flex: 1; border-radius: 999px; padding: 8px 10px; text-align: center; font-size: 12px; font-weight: 800; color: #475467; background: #f2f4f7; }
+    .level.active { color: white; background: linear-gradient(135deg, var(--blue), var(--teal)); }
+
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 15px 18px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+    th { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: 0.05em; background: #fbfcff; }
+    tr:last-child td { border-bottom: 0; }
+    code { color: #101828; background: #f2f4f7; border-radius: 8px; padding: 3px 7px; font-family: Consolas, monospace; font-size: 13px; }
+    .practice { padding: 22px; }
+    .review-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; padding: 22px; }
+    .review-card { border: 1px solid var(--line); border-radius: 18px; padding: 16px; background: linear-gradient(135deg, #ffffff, #fbfcff); }
+    .review-card h3 { margin: 0 0 12px; font-size: 16px; }
+    .review-card.blue { border-color: rgba(51, 92, 255, 0.22); background: linear-gradient(135deg, #f7f9ff, #ffffff); }
+    .review-card.teal { border-color: rgba(0, 140, 122, 0.22); background: linear-gradient(135deg, #f2fffb, #ffffff); }
+    .review-card.gold { border-color: rgba(183, 121, 31, 0.24); background: linear-gradient(135deg, #fffaf0, #ffffff); }
+    .review-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+    .review-list li { display: flex; justify-content: space-between; gap: 12px; align-items: center; border: 1px solid rgba(230, 233, 242, 0.9); border-radius: 12px; padding: 10px 12px; background: rgba(255, 255, 255, 0.76); }
+    .review-list strong { font-size: 13px; }
+    .review-list span { color: var(--muted); font-size: 13px; text-align: right; }
+    .note { margin-top: 18px; color: var(--muted); line-height: 1.6; }
+
+    .flip-grid, .difficult-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; padding: 22px; }
+    .flip-card { display: block; width: 100%; min-height: 148px; perspective: 900px; cursor: pointer; outline: 0; }
+    .flip-card:focus-visible { outline: 3px solid rgba(51, 92, 255, 0.34); outline-offset: 4px; border-radius: 18px; }
+    .flip-inner { display: block; position: relative; min-height: 148px; border-radius: 18px; transform-style: preserve-3d; transition: transform 360ms ease; box-shadow: 0 12px 26px rgba(17, 24, 39, 0.08); }
+    .flip-card.is-flipped .flip-inner { transform: rotateY(180deg); }
+    .flip-face { position: absolute; inset: 0; backface-visibility: hidden; border-radius: 18px; padding: 18px; border: 1px solid var(--line); background: white; overflow: hidden; }
+    .flip-back { transform: rotateY(180deg); background: linear-gradient(135deg, #eef3ff, #e9fbf7); }
+    .pronunciation { display: inline-block; margin-top: 10px; color: #344054; background: #f8fafc; border-radius: 999px; padding: 6px 10px; font-size: 12px; font-weight: 700; }
+
+    .question { border: 1px solid #f3d6df; background: linear-gradient(135deg, #fff7f9, #ffffff); border-radius: 18px; padding: 18px; }
+    .options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+    .option { border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; background: white; color: var(--ink); cursor: pointer; font: inherit; text-align: left; transition: transform 160ms ease, border-color 160ms ease, background 160ms ease, box-shadow 160ms ease; }
+    .option:hover { transform: translateY(-1px); border-color: #b8c2d8; box-shadow: 0 10px 22px rgba(17, 24, 39, 0.08); }
+    .option.correct { border-color: var(--green); background: #dcfae6; color: #05603a; box-shadow: 0 12px 26px rgba(18, 183, 106, 0.18); }
+    .option.wrong { border-color: var(--red); background: #fff1f0; color: #b42318; }
+    .answer-feedback { display: none; margin-top: 14px; border-radius: 14px; padding: 12px 14px; font-weight: 800; }
+    .answer-feedback.success { display: block; background: #dcfae6; color: #05603a; }
+    .answer-feedback.retry { display: block; background: #fff1f0; color: #b42318; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+    .primary-action, .secondary-action {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 16px;
+      cursor: pointer;
+      font-weight: 800;
+      font: inherit;
+    }
+    .primary-action { color: #172033; background: #ffffff; box-shadow: 0 12px 24px rgba(17, 24, 39, 0.16); }
+    .secondary-action { color: white; background: rgba(255, 255, 255, 0.16); border: 1px solid rgba(255, 255, 255, 0.32); }
+    .module-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; padding: 22px; }
+    .module-card { border: 1px solid var(--line); border-radius: 18px; padding: 18px; background: linear-gradient(135deg, #ffffff, #fbfcff); }
+    .module-card h3 { margin: 0 0 8px; }
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: none;
+      padding: 28px;
+      background: rgba(15, 23, 42, 0.58);
+      backdrop-filter: blur(8px);
+      overflow: auto;
+    }
+    .modal-backdrop.is-open { display: block; }
+    .modal-panel {
+      width: min(1040px, 100%);
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 30px 90px rgba(15, 23, 42, 0.32);
+      overflow: hidden;
+    }
+    .modal-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      color: white;
+      padding: 24px;
+      background: linear-gradient(135deg, #172033, #335cff);
+    }
+    .modal-header h2 { margin: 0; }
+    .close-modal { border: 0; border-radius: 999px; padding: 9px 12px; cursor: pointer; font: inherit; font-weight: 800; }
+    .test-tabs { display: flex; gap: 10px; padding: 18px 22px 0; flex-wrap: wrap; }
+    .test-tab { border: 1px solid var(--line); border-radius: 999px; padding: 10px 14px; background: white; cursor: pointer; font: inherit; font-weight: 800; }
+    .test-tab.active { color: white; border-color: var(--blue); background: linear-gradient(135deg, var(--blue), var(--teal)); }
+    .test-list { display: grid; gap: 14px; padding: 22px; }
+    .test-question { border: 1px solid var(--line); border-radius: 18px; padding: 16px; background: linear-gradient(135deg, #ffffff, #fbfcff); }
+    .tooltip-word { position: relative; border-bottom: 1px dashed currentColor; cursor: pointer; }
+    .tooltip-word::after {
+      content: attr(data-translation);
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 8px);
+      transform: translateX(-50%);
+      display: none;
+      width: max-content;
+      max-width: 240px;
+      padding: 8px 10px;
+      border-radius: 10px;
+      color: white;
+      background: #172033;
+      box-shadow: 0 12px 24px rgba(17, 24, 39, 0.22);
+      font-size: 12px;
+      z-index: 5;
+    }
+    .tooltip-word:hover::after { display: block; }
+    .tooltip-word.saved { color: var(--teal); border-bottom-style: solid; }
+    .dictionary-toolbar, .add-word-form { display: flex; flex-wrap: wrap; gap: 10px; padding: 0 22px 18px; }
+    .dictionary-toolbar input, .dictionary-toolbar select, .add-word-form input, .add-word-form select {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 11px 12px;
+      font: inherit;
+      min-width: 180px;
+    }
+    .dictionary-list { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding: 0 22px 22px; }
+    .dict-card { border: 1px solid var(--line); border-radius: 16px; padding: 14px; background: #ffffff; }
+    .dict-card strong { display: block; margin-bottom: 6px; }
+    .dict-card span { color: var(--muted); font-size: 13px; }
+    .word-chip { border: 1px solid #ffd6d3; background: #fff7f6; color: #b42318; border-radius: 16px; padding: 14px; font-weight: 800; }
+    .certificate { padding: 28px; background: linear-gradient(135deg, rgba(183, 121, 31, 0.16), rgba(51, 92, 255, 0.10)), #ffffff; }
+    .certificate-card { border: 1px solid rgba(183, 121, 31, 0.32); border-radius: 22px; padding: 26px; background: linear-gradient(135deg, #fffaf0, #ffffff); box-shadow: 0 16px 34px rgba(183, 121, 31, 0.12); }
+
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 20px, 1180px); padding-top: 14px; }
+      .stats, .dashboard-grid, .review-grid, .flip-grid, .difficult-list, .options, .module-grid, .dictionary-list { grid-template-columns: 1fr; }
+      table { display: block; overflow-x: auto; }
+      th, td { padding: 12px; }
+    }
   </style>
 </head>
 <body>
@@ -69,112 +234,685 @@
       <div class="hero-top">
         <div>
           <p class="eyebrow">Daily English Vocabulary Lab</p>
-          <h1>İngilis dili - 3-cü gün</h1>
-          <p class="hero-note">Bugünkü dərsdə maliyyə auditi, İT və gündəlik danışıq mövzularında yeni sözlər öyrənirik.</p>
+          <h1>Premium söz dərsi</h1>
+          <p class="hero-note">Maliyyə auditi, IT və gündəlik danışıq üzrə gündəlik 15 söz. Bugünkü dashboard Gün 2 üçün yeniləndi.</p>
         </div>
-        <div class="date-card"><span>Gün 3</span><strong>24.06.2026</strong><span>Bakı vaxtı ilə 10:00</span></div>
+        <div class="date-card">
+          <span>Gün 2</span>
+          <strong>24.06.2026</strong>
+          <span>Bakı vaxtı ilə 10:00</span>
+        </div>
       </div>
       <div class="stats">
         <div class="stat"><span>Bugünkü sözlər</span><strong>15</strong></div>
-        <div class="stat"><span>Həftəlik sözlər</span><strong>45</strong></div>
-        <div class="stat"><span>Aylıq sözlər</span><strong>45</strong></div>
-        <div class="stat"><span>Streak</span><strong id="streakValue">3 gün</strong></div>
+        <div class="stat"><span>Həftəlik sözlər</span><strong>30</strong></div>
+        <div class="stat"><span>Aylıq sözlər</span><strong>30</strong></div>
+        <div class="stat"><span>Streak</span><strong id="streakValue">2 gün</strong></div>
+      </div>
+      <div class="hero-actions">
+        <button class="primary-action" type="button" data-open-tests>Test mərkəzini aç</button>
+        <button class="secondary-action" type="button" data-open-dictionary>Lüğəti aç</button>
       </div>
     </section>
 
     <section class="section">
-      <div class="section-header"><h2>Learning Dashboard</h2><span class="pill">Premium status</span></div>
+      <div class="section-header"><h2>Learning Dashboard</h2><span class="pill" style="background:#eef3ff;color:var(--blue);">Premium status</span></div>
       <div class="dashboard-grid">
-        <div class="feature-card"><h3>Həftəlik progress</h3><p>Hədəf: 75 söz. Hazırda: 45 söz.</p><div class="progress-track"><div class="progress-fill" style="--value:60%"></div></div></div>
-        <div class="feature-card"><h3>Aylıq progress</h3><p>Hədəf: 300 söz. Hazırda: 45 söz.</p><div class="progress-track"><div class="progress-fill" style="--value:15%"></div></div></div>
-        <div class="feature-card"><h3>Level sistemi</h3><p>İndiki mərhələ: Beginner.</p><div class="level-band"><span class="level active">Beginner</span><span class="level ">Intermediate</span><span class="level ">Advanced</span></div></div>
+        <div class="feature-card"><h3>Həftəlik progress</h3><p>Hədəf: 75 söz. Hazırda: 30 söz.</p><div class="progress-track"><div class="progress-fill" style="--value:40%"></div></div></div>
+        <div class="feature-card"><h3>Aylıq progress</h3><p>Hədəf: 300 söz. Hazırda: 30 söz.</p><div class="progress-track"><div class="progress-fill" style="--value:10%"></div></div></div>
+        <div class="feature-card"><h3>Level sistemi</h3><p>İndiki mərhələ: Beginner. 150 sözdən sonra Intermediate açılır.</p><div class="level-band"><span class="level active">Beginner</span><span class="level">Intermediate</span><span class="level">Advanced</span></div></div>
       </div>
     </section>
 
     <section class="section">
-      <div class="section-header"><h2>Qısa Təkrar</h2><span class="pill">Əvvəlki dərs</span></div>
-      <div class="review-grid"><div class="review-card"><h3>Maliyyə auditi</h3><ul class="review-list"><li><strong>Audit evidence</strong><span>audit sübutu</span></li></ul></div><div class="review-card"><h3>IT</h3><ul class="review-list"><li><strong>Cloud storage</strong><span>bulud yaddaşı</span></li></ul></div><div class="review-card"><h3>Gündəlik danışıq</h3><ul class="review-list"><li><strong>Reschedule</strong><span>vaxtını dəyişmək</span></li></ul></div></div>
+      <div class="section-header"><h2>Qısa Təkrar</h2><span class="pill" style="background:#f2f4f7;color:#475467;">Dünənki 15 söz</span></div>
+      <div class="review-grid">
+        <div class="review-card blue">
+          <h3>Maliyyə auditi</h3>
+          <ul class="review-list">
+            <li><strong>Audit trail</strong><span>audit izi</span></li>
+            <li><strong>Materiality</strong><span>əhəmiyyətlilik</span></li>
+            <li><strong>Internal control</strong><span>daxili nəzarət</span></li>
+            <li><strong>Misstatement</strong><span>yanlış təqdimat</span></li>
+            <li><strong>Compliance</strong><span>uyğunluq</span></li>
+          </ul>
+        </div>
+        <div class="review-card teal">
+          <h3>IT</h3>
+          <ul class="review-list">
+            <li><strong>Firewall</strong><span>təhlükəsizlik divarı</span></li>
+            <li><strong>Database</strong><span>məlumat bazası</span></li>
+            <li><strong>Encryption</strong><span>şifrələmə</span></li>
+            <li><strong>Backup</strong><span>ehtiyat nüsxə</span></li>
+            <li><strong>Authentication</strong><span>kimlik doğrulama</span></li>
+          </ul>
+        </div>
+        <div class="review-card gold">
+          <h3>Gündəlik danışıq</h3>
+          <ul class="review-list">
+            <li><strong>Appointment</strong><span>görüş / təyin olunmuş vaxt</span></li>
+            <li><strong>Deadline</strong><span>son tarix</span></li>
+            <li><strong>Receipt</strong><span>qəbz</span></li>
+            <li><strong>Schedule</strong><span>cədvəl / plan</span></li>
+            <li><strong>Request</strong><span>sorğu / xahiş</span></li>
+          </ul>
+        </div>
+      </div>
     </section>
 
-    <section class="section"><div class="section-header"><h2>Maliyyə auditi</h2><span class="pill">blue</span></div><table><thead><tr><th>#</th><th>Söz</th><th>Tələffüz</th><th>Tərcümə</th><th>Nümunə cümlə</th></tr></thead><tbody><tr><td>1</td><td><code>Verification</code></td><td>ˌvɛrɪfɪˈkeɪʃən</td><td>Təsdiqləmə</td><td>Verification of financial statements is essential before approval.</td></tr><tr><td>2</td><td><code>Ledger</code></td><td>ˈlɛdʒər</td><td>Əsas kitab</td><td>The accountant updated the ledger at the end of the day.</td></tr><tr><td>3</td><td><code>Variance</code></td><td>ˈvɛəriəns</td><td>Fərq, dəyişiklik</td><td>We analyzed the variance between budgeted and actual costs.</td></tr><tr><td>4</td><td><code>Depreciation</code></td><td>dɪˌpriːʃiˈeɪʃən</td><td>Amortizasiya</td><td>Depreciation of fixed assets affects the profit calculation.</td></tr><tr><td>5</td><td><code>Accrual</code></td><td>əˈkruːəl</td><td>Hesablama, toplanma</td><td>Accrual accounting records revenues and expenses when they occur.</td></tr></tbody></table></section><section class="section"><div class="section-header"><h2>IT</h2><span class="pill">blue</span></div><table><thead><tr><th>#</th><th>Söz</th><th>Tələffüz</th><th>Tərcümə</th><th>Nümunə cümlə</th></tr></thead><tbody><tr><td>1</td><td><code>Latency</code></td><td>ˈleɪtənsi</td><td>Gecikmə</td><td>High latency can slow down internet browsing.</td></tr><tr><td>2</td><td><code>Bandwidth</code></td><td>ˈbændwɪθ</td><td>Zolaq eni</td><td>The new plan offers more bandwidth for faster downloads.</td></tr><tr><td>3</td><td><code>Protocol</code></td><td>ˈproʊtəˌkɑːl</td><td>Protokol</td><td>HTTP is the protocol used for web communication.</td></tr><tr><td>4</td><td><code>Cache</code></td><td>kæʃ</td><td>Keshləmə</td><td>Clearing the cache can fix loading issues in browsers.</td></tr><tr><td>5</td><td><code>Indexing</code></td><td>ˈɪndɛksɪŋ</td><td>İndeksləmə</td><td>Indexing databases improves query performance.</td></tr></tbody></table></section><section class="section"><div class="section-header"><h2>Gündəlik danışıq</h2><span class="pill">blue</span></div><table><thead><tr><th>#</th><th>Söz</th><th>Tələffüz</th><th>Tərcümə</th><th>Nümunə cümlə</th></tr></thead><tbody><tr><td>1</td><td><code>Commute</code></td><td>kəˈmjuːt</td><td>Gündəlik işə gedib-gəlmək</td><td>I commute to work by bus every day.</td></tr><tr><td>2</td><td><code>Groceries</code></td><td>ˈɡroʊsəriz</td><td>Market alış-verişi</td><td>She went to buy groceries after work.</td></tr><tr><td>3</td><td><code>Appointment</code></td><td>əˈpɔɪntmənt</td><td>Görüş</td><td>I have a dentist appointment at 3 PM.</td></tr><tr><td>4</td><td><code>Recipe</code></td><td>ˈrɛsəpi</td><td>Resept</td><td>This recipe is great for a quick dinner.</td></tr><tr><td>5</td><td><code>Errand</code></td><td>ˈɛrənd</td><td>İş tapşırığı, məsələ</td><td>I need to run some errands this afternoon.</td></tr></tbody></table></section>
+    <section class="section blue">
+      <div class="section-header"><h2>Maliyyə Auditi</h2><span class="pill">Mavi fokus</span></div>
+      <table>
+        <thead><tr><th>#</th><th>Söz</th><th>Tələffüz</th><th>Tərcümə</th><th>Nümunə cümlə</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><code>Substantive testing</code></td><td>/səbˈstæn.tɪv ˈtes.tɪŋ/</td><td>mahiyyət üzrə test</td><td>The auditor performed substantive testing on revenue transactions.</td></tr>
+          <tr><td>2</td><td><code>Control deficiency</code></td><td>/kənˈtroʊl dɪˈfɪʃ.ən.si/</td><td>nəzarət çatışmazlığı</td><td>A control deficiency was reported to management.</td></tr>
+          <tr><td>3</td><td><code>Sampling</code></td><td>/ˈsæm.plɪŋ/</td><td>seçmə üsulu</td><td>Sampling helps auditors test a portion of the transactions.</td></tr>
+          <tr><td>4</td><td><code>Reconciliation</code></td><td>/ˌrek.ənˌsɪl.iˈeɪ.ʃən/</td><td>üzləşdirmə / tutuşdurma</td><td>Bank reconciliation confirmed the cash balance.</td></tr>
+          <tr><td>5</td><td><code>Audit evidence</code></td><td>/ˈɔː.dɪt ˈev.ɪ.dəns/</td><td>audit sübutu</td><td>The auditor collected audit evidence to support the conclusion.</td></tr>
+        </tbody>
+      </table>
+    </section>
 
-    <section class="section">
-      <div class="section-header"><h2>Flip Card Rejimi</h2><span class="pill">Kliklə çevir</span></div>
-      <div class="flip-grid"><div class="flip-card" role="button" tabindex="0" aria-label="Verification kartını çevir"><div class="flip-inner"><div class="flip-face"><strong>Verification</strong><span class="pronunciation">ˌvɛrɪfɪˈkeɪʃən</span><p class="note">Tərcüməni görmək üçün kliklə.</p></div><div class="flip-face flip-back"><strong>Təsdiqləmə</strong><p>Verification of financial statements is essential before approval.</p></div></div></div><div class="flip-card" role="button" tabindex="0" aria-label="Ledger kartını çevir"><div class="flip-inner"><div class="flip-face"><strong>Ledger</strong><span class="pronunciation">ˈlɛdʒər</span><p class="note">Tərcüməni görmək üçün kliklə.</p></div><div class="flip-face flip-back"><strong>Əsas kitab</strong><p>The accountant updated the ledger at the end of the day.</p></div></div></div><div class="flip-card" role="button" tabindex="0" aria-label="Variance kartını çevir"><div class="flip-inner"><div class="flip-face"><strong>Variance</strong><span class="pronunciation">ˈvɛəriəns</span><p class="note">Tərcüməni görmək üçün kliklə.</p></div><div class="flip-face flip-back"><strong>Fərq, dəyişiklik</strong><p>We analyzed the variance between budgeted and actual costs.</p></div></div></div><div class="flip-card" role="button" tabindex="0" aria-label="Depreciation kartını çevir"><div class="flip-inner"><div class="flip-face"><strong>Depreciation</strong><span class="pronunciation">dɪˌpriːʃiˈeɪʃən</span><p class="note">Tərcüməni görmək üçün kliklə.</p></div><div class="flip-face flip-back"><strong>Amortizasiya</strong><p>Depreciation of fixed assets affects the profit calculation.</p></div></div></div><div class="flip-card" role="button" tabindex="0" aria-label="Accrual kartını çevir"><div class="flip-inner"><div class="flip-face"><strong>Accrual</strong><span class="pronunciation">əˈkruːəl</span><p class="note">Tərcüməni görmək üçün kliklə.</p></div><div class="flip-face flip-back"><strong>Hesablama, toplanma</strong><p>Accrual accounting records revenues and expenses when they occur.</p></div></div></div><div class="flip-card" role="button" tabindex="0" aria-label="Latency kartını çevir"><div class="flip-inner"><div class="flip-face"><strong>Latency</strong><span class="pronunciation">ˈleɪtənsi</span><p class="note">Tərcüməni görmək üçün kliklə.</p></div><div class="flip-face flip-back"><strong>Gecikmə</strong><p>High latency can slow down internet browsing.</p></div></div></div></div>
+    <section class="section teal">
+      <div class="section-header"><h2>IT</h2><span class="pill">Yaşıl fokus</span></div>
+      <table>
+        <thead><tr><th>#</th><th>Söz</th><th>Tələffüz</th><th>Tərcümə</th><th>Nümunə cümlə</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><code>Server</code></td><td>/ˈsɜːr.vər/</td><td>server</td><td>The application runs on a secure server.</td></tr>
+          <tr><td>2</td><td><code>Cloud storage</code></td><td>/klaʊd ˈstɔːr.ɪdʒ/</td><td>bulud yaddaşı</td><td>We store backup files in cloud storage.</td></tr>
+          <tr><td>3</td><td><code>Access rights</code></td><td>/ˈæk.ses raɪts/</td><td>giriş hüquqları</td><td>Access rights should be reviewed regularly.</td></tr>
+          <tr><td>4</td><td><code>Patch</code></td><td>/pætʃ/</td><td>yeniləmə düzəlişi</td><td>The IT team installed a security patch.</td></tr>
+          <tr><td>5</td><td><code>Malware</code></td><td>/ˈmæl.weər/</td><td>zərərli proqram</td><td>Malware can damage files and steal information.</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section gold">
+      <div class="section-header"><h2>Gündəlik Danışıq</h2><span class="pill">Qızılı fokus</span></div>
+      <table>
+        <thead><tr><th>#</th><th>Söz</th><th>Tələffüz</th><th>Tərcümə</th><th>Nümunə cümlə</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><code>Confirm</code></td><td>/kənˈfɜːrm/</td><td>təsdiqləmək</td><td>Please confirm the meeting time.</td></tr>
+          <tr><td>2</td><td><code>Reschedule</code></td><td>/ˌriːˈskedʒ.uːl/</td><td>vaxtını dəyişmək</td><td>Can we reschedule the call for tomorrow?</td></tr>
+          <tr><td>3</td><td><code>Available</code></td><td>/əˈveɪ.lə.bəl/</td><td>əlçatan / münasib</td><td>I am available after lunch.</td></tr>
+          <tr><td>4</td><td><code>Issue</code></td><td>/ˈɪʃ.uː/</td><td>problem / məsələ</td><td>We need to discuss this issue today.</td></tr>
+          <tr><td>5</td><td><code>Follow up</code></td><td>/ˈfɑː.loʊ ʌp/</td><td>təqib etmək / yenidən əlaqə saxlamaq</td><td>I will follow up with you next week.</td></tr>
+        </tbody>
+      </table>
     </section>
 
     <section class="section">
-      <div class="section-header"><h2>Mini Practice</h2><span class="pill">A/B/C/D test</span></div>
-      <div class="quiz-grid"><div class="question"><strong>1. "Verification" nə deməkdir?</strong><p class="note">Verification of financial statements is essential before approval.</p><div class="options" data-quiz data-correct="Təsdiqləmə" data-word="Verification"><button class="option" type="button" data-choice="Təsdiqləmə">A. Təsdiqləmə</button><button class="option" type="button" data-choice="Amortizasiya">B. Amortizasiya</button><button class="option" type="button" data-choice="Əsas kitab">C. Əsas kitab</button><button class="option" type="button" data-choice="Fərq, dəyişiklik">D. Fərq, dəyişiklik</button></div><div class="answer-feedback" aria-live="polite"></div></div><div class="question"><strong>2. "Ledger" nə deməkdir?</strong><p class="note">The accountant updated the ledger at the end of the day.</p><div class="options" data-quiz data-correct="Əsas kitab" data-word="Ledger"><button class="option" type="button" data-choice="Amortizasiya">A. Amortizasiya</button><button class="option" type="button" data-choice="Fərq, dəyişiklik">B. Fərq, dəyişiklik</button><button class="option" type="button" data-choice="Təsdiqləmə">C. Təsdiqləmə</button><button class="option" type="button" data-choice="Əsas kitab">D. Əsas kitab</button></div><div class="answer-feedback" aria-live="polite"></div></div><div class="question"><strong>3. "Variance" nə deməkdir?</strong><p class="note">We analyzed the variance between budgeted and actual costs.</p><div class="options" data-quiz data-correct="Fərq, dəyişiklik" data-word="Variance"><button class="option" type="button" data-choice="Amortizasiya">A. Amortizasiya</button><button class="option" type="button" data-choice="Əsas kitab">B. Əsas kitab</button><button class="option" type="button" data-choice="Təsdiqləmə">C. Təsdiqləmə</button><button class="option" type="button" data-choice="Fərq, dəyişiklik">D. Fərq, dəyişiklik</button></div><div class="answer-feedback" aria-live="polite"></div></div><div class="question"><strong>4. "Depreciation" nə deməkdir?</strong><p class="note">Depreciation of fixed assets affects the profit calculation.</p><div class="options" data-quiz data-correct="Amortizasiya" data-word="Depreciation"><button class="option" type="button" data-choice="Fərq, dəyişiklik">A. Fərq, dəyişiklik</button><button class="option" type="button" data-choice="Amortizasiya">B. Amortizasiya</button><button class="option" type="button" data-choice="Təsdiqləmə">C. Təsdiqləmə</button><button class="option" type="button" data-choice="Əsas kitab">D. Əsas kitab</button></div><div class="answer-feedback" aria-live="polite"></div></div><div class="question"><strong>5. "Accrual" nə deməkdir?</strong><p class="note">Accrual accounting records revenues and expenses when they occur.</p><div class="options" data-quiz data-correct="Hesablama, toplanma" data-word="Accrual"><button class="option" type="button" data-choice="Fərq, dəyişiklik">A. Fərq, dəyişiklik</button><button class="option" type="button" data-choice="Təsdiqləmə">B. Təsdiqləmə</button><button class="option" type="button" data-choice="Əsas kitab">C. Əsas kitab</button><button class="option" type="button" data-choice="Hesablama, toplanma">D. Hesablama, toplanma</button></div><div class="answer-feedback" aria-live="polite"></div></div><div class="question"><strong>6. "Latency" nə deməkdir?</strong><p class="note">High latency can slow down internet browsing.</p><div class="options" data-quiz data-correct="Gecikmə" data-word="Latency"><button class="option" type="button" data-choice="Təsdiqləmə">A. Təsdiqləmə</button><button class="option" type="button" data-choice="Əsas kitab">B. Əsas kitab</button><button class="option" type="button" data-choice="Fərq, dəyişiklik">C. Fərq, dəyişiklik</button><button class="option" type="button" data-choice="Gecikmə">D. Gecikmə</button></div><div class="answer-feedback" aria-live="polite"></div></div><div class="question"><strong>7. "Bandwidth" nə deməkdir?</strong><p class="note">The new plan offers more bandwidth for faster downloads.</p><div class="options" data-quiz data-correct="Zolaq eni" data-word="Bandwidth"><button class="option" type="button" data-choice="Təsdiqləmə">A. Təsdiqləmə</button><button class="option" type="button" data-choice="Fərq, dəyişiklik">B. Fərq, dəyişiklik</button><button class="option" type="button" data-choice="Zolaq eni">C. Zolaq eni</button><button class="option" type="button" data-choice="Əsas kitab">D. Əsas kitab</button></div><div class="answer-feedback" aria-live="polite"></div></div><div class="question"><strong>8. "Protocol" nə deməkdir?</strong><p class="note">HTTP is the protocol used for web communication.</p><div class="options" data-quiz data-correct="Protokol" data-word="Protocol"><button class="option" type="button" data-choice="Fərq, dəyişiklik">A. Fərq, dəyişiklik</button><button class="option" type="button" data-choice="Təsdiqləmə">B. Təsdiqləmə</button><button class="option" type="button" data-choice="Protokol">C. Protokol</button><button class="option" type="button" data-choice="Əsas kitab">D. Əsas kitab</button></div><div class="answer-feedback" aria-live="polite"></div></div><div class="question"><strong>9. "Cache" nə deməkdir?</strong><p class="note">Clearing the cache can fix loading issues in browsers.</p><div class="options" data-quiz data-correct="Keshləmə" data-word="Cache"><button class="option" type="button" data-choice="Keshləmə">A. Keshləmə</button><button class="option" type="button" data-choice="Təsdiqləmə">B. Təsdiqləmə</button><button class="option" type="button" data-choice="Əsas kitab">C. Əsas kitab</button><button class="option" type="button" data-choice="Fərq, dəyişiklik">D. Fərq, dəyişiklik</button></div><div class="answer-feedback" aria-live="polite"></div></div><div class="question"><strong>10. "Indexing" nə deməkdir?</strong><p class="note">Indexing databases improves query performance.</p><div class="options" data-quiz data-correct="İndeksləmə" data-word="Indexing"><button class="option" type="button" data-choice="İndeksləmə">A. İndeksləmə</button><button class="option" type="button" data-choice="Fərq, dəyişiklik">B. Fərq, dəyişiklik</button><button class="option" type="button" data-choice="Təsdiqləmə">C. Təsdiqləmə</button><button class="option" type="button" data-choice="Əsas kitab">D. Əsas kitab</button></div><div class="answer-feedback" aria-live="polite"></div></div><div class="question"><strong>11. "Commute" nə deməkdir?</strong><p class="note">I commute to work by bus every day.</p><div class="options" data-quiz data-correct="Gündəlik işə gedib-gəlmək" data-word="Commute"><button class="option" type="button" data-choice="Əsas kitab">A. Əsas kitab</button><button class="option" type="button" data-choice="Gündəlik işə gedib-gəlmək">B. Gündəlik işə gedib-gəlmək</button><button class="option" type="button" data-choice="Təsdiqləmə">C. Təsdiqləmə</button><button class="option" type="button" data-choice="Fərq, dəyişiklik">D. Fərq, dəyişiklik</button></div><div class="answer-feedback" aria-live="polite"></div></div><div class="question"><strong>12. "Groceries" nə deməkdir?</strong><p class="note">She went to buy groceries after work.</p><div class="options" data-quiz data-correct="Market alış-verişi" data-word="Groceries"><button class="option" type="button" data-choice="Market alış-verişi">A. Market alış-verişi</button><button class="option" type="button" data-choice="Təsdiqləmə">B. Təsdiqləmə</button><button class="option" type="button" data-choice="Fərq, dəyişiklik">C. Fərq, dəyişiklik</button><button class="option" type="button" data-choice="Əsas kitab">D. Əsas kitab</button></div><div class="answer-feedback" aria-live="polite"></div></div></div>
+      <div class="section-header"><h2>Flip Card Rejimi</h2><span class="pill" style="background:#e9fbf7;color:var(--teal);">Kliklə çevir</span></div>
+      <div class="flip-grid">
+        <div class="flip-card" role="button" tabindex="0" aria-label="Audit evidence kartını çevir"><div class="flip-inner"><div class="flip-face"><strong>Audit evidence</strong><span class="pronunciation">/ˈɔː.dɪt ˈev.ɪ.dəns/</span><p class="note">Tərcüməni görmək üçün kliklə.</p></div><div class="flip-face flip-back"><strong>Audit sübutu</strong><p>The auditor collected audit evidence to support the conclusion.</p></div></div></div>
+        <div class="flip-card" role="button" tabindex="0" aria-label="Cloud storage kartını çevir"><div class="flip-inner"><div class="flip-face"><strong>Cloud storage</strong><span class="pronunciation">/klaʊd ˈstɔːr.ɪdʒ/</span><p class="note">Tərcüməni görmək üçün kliklə.</p></div><div class="flip-face flip-back"><strong>Bulud yaddaşı</strong><p>We store backup files in cloud storage.</p></div></div></div>
+        <div class="flip-card" role="button" tabindex="0" aria-label="Reschedule kartını çevir"><div class="flip-inner"><div class="flip-face"><strong>Reschedule</strong><span class="pronunciation">/ˌriːˈskedʒ.uːl/</span><p class="note">Tərcüməni görmək üçün kliklə.</p></div><div class="flip-face flip-back"><strong>Vaxtını dəyişmək</strong><p>Can we reschedule the call for tomorrow?</p></div></div></div>
+      </div>
     </section>
 
-    
-    
+    <section class="section">
+      <div class="section-header"><h2>Test Mərkəzi</h2><span class="pill" style="background:#fff1f3;color:var(--rose);">30 sual</span></div>
+      <div class="module-grid">
+        <div class="module-card">
+          <h3>Bugünkü 15 söz testi</h3>
+          <p class="note">Gün 2 sözləri üzrə ayrıca test pəncərəsində 15 sual açılır. Bilmədiyin sözün üstünə mouse aparanda tərcümə ipucu görünür.</p>
+          <button class="primary-action" type="button" data-open-tests data-test-mode="today">Bugünkü testi aç</button>
+        </div>
+        <div class="module-card">
+          <h3>Dünənki 15 söz təkrarı</h3>
+          <p class="note">Gün 1 sözləri üzrə təkrar testi ayrıca pəncərədə açılır. Səhv cavablar avtomatik Çətin Sözlər siyahısına düşür.</p>
+          <button class="primary-action" type="button" data-open-tests data-test-mode="review">Təkrar testini aç</button>
+        </div>
+      </div>
+    </section>
 
     <section class="section">
-      <div class="section-header"><h2>Çətin Sözlər</h2><span class="pill">Avtomatik siyahı</span></div>
+      <div class="section-header"><h2>Çətin Sözlər</h2><span class="pill" style="background:#fff1f0;color:#b42318;">Avtomatik siyahı</span></div>
       <div class="difficult-list" id="difficultWords"><div class="word-chip">Səhv cavab verilən sözlər burada görünəcək.</div></div>
     </section>
 
+    <section class="section" id="dictionarySection">
+      <div class="section-header"><h2>Lüğət Modulu</h2><span class="pill" style="background:#eef3ff;color:var(--blue);">Pəncərə kimi açılır</span></div>
+      <div class="module-grid">
+        <div class="module-card">
+          <h3>Alfabetik söz bazası</h3>
+          <p class="note">Öyrəndiyin və əlavə etdiyin sözlər ayrıca lüğət pəncərəsində saxlanılır.</p>
+        </div>
+        <div class="module-card">
+          <h3>Sürətli giriş</h3>
+          <p class="note">Axtarış, kateqoriya filtri və yeni söz əlavə etmə funksiyaları modal pəncərədədir.</p>
+          <button class="primary-action" type="button" data-open-dictionary>Lüğəti aç</button>
+        </div>
+      </div>
+    </section>
+
     <section class="section">
-      <div class="section-header"><h2>Aylıq Sertifikat Kartı</h2><span class="pill">Monthly Vocabulary Certificate</span></div>
+      <div class="section-header"><h2>Aylıq Sertifikat Kartı</h2><span class="pill" style="background:#fff7df;color:var(--gold);">Monthly report</span></div>
       <div class="certificate"><div class="certificate-card">
-        <p class="eyebrow" style="color:#8a5a16;opacity:1;">Monthly Vocabulary Certificate</p>
+        <p class="eyebrow" style="color:#8a5a16;opacity:1;">Premium Vocabulary Certificate</p>
         <h3>İyun 2026 nəticə kartı</h3>
-        <div class="dashboard-grid" style="padding:0;margin-top:18px;"><div class="feature-card"><h3>Öyrənilən sözlər</h3><p>45 / 300</p></div><div class="feature-card"><h3>Test faizi</h3><p id="testScore">Cavab gözlənilir</p></div><div class="feature-card"><h3>Status</h3><p>Beginner aktivdir</p></div></div>
+        <p class="note">Ay sonunda burada öyrənilən söz sayı, test faizi, streak və səviyyə yekunu göstəriləcək.</p>
+        <div class="dashboard-grid" style="padding:0;margin-top:18px;"><div class="feature-card"><h3>Öyrənilən sözlər</h3><p>30 / 300</p></div><div class="feature-card"><h3>Test nəticəsi</h3><p id="testScore">Cavab gözlənilir</p></div><div class="feature-card"><h3>Status</h3><p>Başlanğıc mərhələ aktivdir</p></div></div>
       </div></div>
     </section>
   </main>
 
-  <script>
-    const storageKey = "dailyEnglishDashboardState";
-    const fallbackState = { streak: 3, correct: 0, total: 0, difficult: [] };
-    let state = JSON.parse(localStorage.getItem(storageKey) || JSON.stringify(fallbackState));
-    state.streak = Math.max(state.streak || 0, 3);
+  <div class="modal-backdrop" id="testModal" aria-hidden="true">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="testModalTitle">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">Interactive Test Center</p>
+          <h2 id="testModalTitle">Test mərkəzi</h2>
+          <p class="hero-note">Cavabı seç. Düzgün cavab yaşıl fonda, səhv seçim qırmızı fonda görünəcək.</p>
+        </div>
+        <button class="close-modal" type="button" data-close-tests>Bağla</button>
+      </div>
+      <div class="test-tabs">
+        <button class="test-tab active" type="button" data-test-tab="today">Bugünkü 15 söz</button>
+        <button class="test-tab" type="button" data-test-tab="review">Dünənki 15 söz</button>
+      </div>
+      <div class="test-list" id="testList"></div>
+    </div>
+  </div>
 
-    function saveState() { localStorage.setItem(storageKey, JSON.stringify(state)); }
-    function renderState() {
-      document.getElementById("streakValue").textContent = state.streak + " gün";
-      const difficult = document.getElementById("difficultWords");
-      difficult.innerHTML = state.difficult.length ? state.difficult.map((word) => '<div class="word-chip">' + escapeHtml(word) + '</div>').join("") : '<div class="word-chip">Səhv cavab verilən sözlər burada görünəcək.</div>';
-      const score = document.getElementById("testScore");
-      if (score) score.textContent = state.total ? Math.round((state.correct / state.total) * 100) + "%" : "Cavab gözlənilir";
-      saveState();
+  <div class="modal-backdrop" id="dictionaryModal" aria-hidden="true">
+    <div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="dictionaryModalTitle">
+      <div class="modal-header">
+        <div>
+          <p class="eyebrow">Personal Vocabulary Vault</p>
+          <h2 id="dictionaryModalTitle">Lüğət Modulu</h2>
+          <p class="hero-note">Sözləri axtar, kateqoriyaya görə süz və yeni sözləri şəxsi lüğətə əlavə et.</p>
+        </div>
+        <button class="close-modal" type="button" data-close-dictionary>Bağla</button>
+      </div>
+      <div class="practice">
+        <p class="note" style="margin-top:0;">Bütün öyrənilən sözlər alfabetik ardıcıllıqla göstərilir. Test cümləsində kliklədiyin sözlər də burada görünəcək.</p>
+      </div>
+      <div class="add-word-form">
+        <input id="newWord" type="text" placeholder="Yeni söz">
+        <input id="newTranslation" type="text" placeholder="Tərcümə">
+        <select id="newCategory">
+          <option value="Maliyyə auditi">Maliyyə auditi</option>
+          <option value="IT">IT</option>
+          <option value="Gündəlik danışıq">Gündəlik danışıq</option>
+          <option value="Şəxsi lüğət">Şəxsi lüğət</option>
+        </select>
+        <button class="primary-action" type="button" id="addWordButton">Lüğətə əlavə et</button>
+      </div>
+      <div class="dictionary-toolbar">
+        <input id="dictionarySearch" type="text" placeholder="Lüğətdə axtar">
+        <select id="dictionaryCategory">
+          <option value="all">Bütün kateqoriyalar</option>
+          <option value="Maliyyə auditi">Maliyyə auditi</option>
+          <option value="IT">IT</option>
+          <option value="Gündəlik danışıq">Gündəlik danışıq</option>
+          <option value="Şəxsi lüğət">Şəxsi lüğət</option>
+        </select>
+      </div>
+      <div class="dictionary-list" id="dictionaryList"></div>
+    </div>
+  </div>
+
+  <script>
+    const storageKey = "premiumVocabularyLab";
+    const state = JSON.parse(localStorage.getItem(storageKey) || '{"streak":2,"correct":0,"total":0,"difficult":[],"customWords":[]}');
+
+    const todayWords = [
+      ["Substantive testing", "mahiyyət üzrə test", "Maliyyə auditi"],
+      ["Control deficiency", "nəzarət çatışmazlığı", "Maliyyə auditi"],
+      ["Sampling", "seçmə üsulu", "Maliyyə auditi"],
+      ["Reconciliation", "üzləşdirmə / tutuşdurma", "Maliyyə auditi"],
+      ["Audit evidence", "audit sübutu", "Maliyyə auditi"],
+      ["Server", "server", "IT"],
+      ["Cloud storage", "bulud yaddaşı", "IT"],
+      ["Access rights", "giriş hüquqları", "IT"],
+      ["Patch", "yeniləmə düzəlişi", "IT"],
+      ["Malware", "zərərli proqram", "IT"],
+      ["Confirm", "təsdiqləmək", "Gündəlik danışıq"],
+      ["Reschedule", "vaxtını dəyişmək", "Gündəlik danışıq"],
+      ["Available", "əlçatan / münasib", "Gündəlik danışıq"],
+      ["Issue", "problem / məsələ", "Gündəlik danışıq"],
+      ["Follow up", "təqib etmək / yenidən əlaqə saxlamaq", "Gündəlik danışıq"]
+    ];
+
+    const reviewWords = [
+      ["Audit trail", "audit izi", "Maliyyə auditi"],
+      ["Materiality", "əhəmiyyətlilik", "Maliyyə auditi"],
+      ["Internal control", "daxili nəzarət", "Maliyyə auditi"],
+      ["Misstatement", "yanlış təqdimat", "Maliyyə auditi"],
+      ["Compliance", "uyğunluq", "Maliyyə auditi"],
+      ["Firewall", "təhlükəsizlik divarı", "IT"],
+      ["Database", "məlumat bazası", "IT"],
+      ["Encryption", "şifrələmə", "IT"],
+      ["Backup", "ehtiyat nüsxə", "IT"],
+      ["Authentication", "kimlik doğrulama", "IT"],
+      ["Appointment", "görüş / təyin olunmuş vaxt", "Gündəlik danışıq"],
+      ["Deadline", "son tarix", "Gündəlik danışıq"],
+      ["Receipt", "qəbz", "Gündəlik danışıq"],
+      ["Schedule", "cədvəl / plan", "Gündəlik danışıq"],
+      ["Request", "sorğu / xahiş", "Gündəlik danışıq"]
+    ];
+
+    const distractors = [
+      "audit izi", "əhəmiyyətlilik", "daxili nəzarət", "yanlış təqdimat", "uyğunluq",
+      "təhlükəsizlik divarı", "məlumat bazası", "şifrələmə", "ehtiyat nüsxə", "kimlik doğrulama",
+      "görüş / təyin olunmuş vaxt", "son tarix", "qəbz", "cədvəl / plan", "sorğu / xahiş",
+      "mahiyyət üzrə test", "nəzarət çatışmazlığı", "seçmə üsulu", "üzləşdirmə / tutuşdurma",
+      "audit sübutu", "server", "bulud yaddaşı", "giriş hüquqları", "yeniləmə düzəlişi",
+      "zərərli proqram", "təsdiqləmək", "vaxtını dəyişmək", "əlçatan / münasib", "problem / məsələ",
+      "təqib etmək / yenidən əlaqə saxlamaq"
+    ];
+
+    let activeTestMode = "today";
+
+    function saveState() {
+      localStorage.setItem(storageKey, JSON.stringify(state));
     }
-    function escapeHtml(value) { return String(value).replace(/[&<>"']/g, (char) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[char])); }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      }[char]));
+    }
+
+    const sentenceTranslations = {
+      "a": "bir",
+      "about": "haqqında",
+      "access": "giriş",
+      "account": "hesab",
+      "accounting": "mühasibat",
+      "accounts": "hesablar",
+      "amounts": "məbləğlər",
+      "an": "bir",
+      "and": "və",
+      "application": "tətbiq",
+      "approval": "təsdiq",
+      "are": "olur / -dır",
+      "at": "-da / -də",
+      "auditor": "auditor",
+      "auditors": "auditorlar",
+      "backup": "ehtiyat nüsxə",
+      "balance": "qalıq / balans",
+      "be": "olmaq",
+      "before": "əvvəl",
+      "blocked": "blokladı",
+      "by": "tərəfindən / ilə",
+      "call": "zəng / görüş",
+      "can": "edə bilər",
+      "cash": "pul vəsaiti",
+      "checking": "yoxlama",
+      "client": "müştəri",
+      "company": "şirkət",
+      "conclusion": "nəticə",
+      "contained": "ehtiva edirdi",
+      "could": "edə bilərdi",
+      "create": "yaratmaq",
+      "customer": "müştəri",
+      "damage": "zədələmək",
+      "data": "məlumat",
+      "day": "gün",
+      "decide": "qərar vermək",
+      "detected": "aşkar etdi",
+      "discuss": "müzakirə etmək",
+      "each": "hər",
+      "end": "son",
+      "error": "səhv",
+      "every": "hər",
+      "financial": "maliyyə",
+      "fix": "düzəltmək",
+      "for": "üçün",
+      "fraud": "dələduzluq",
+      "from": "-dan / -dən",
+      "have": "var / malik olmaq",
+      "helps": "kömək edir",
+      "if": "əgər",
+      "in": "içində / -da",
+      "instead": "əvəzinə",
+      "influence": "təsir etmək",
+      "information": "məlumat",
+      "installed": "quraşdırdı",
+      "invoice": "faktura",
+      "is": "-dır / -dir",
+      "it": "o",
+      "items": "maddələr / bəndlər",
+      "keeps": "saxlayır",
+      "manager": "menecer",
+      "matched": "uyğun gəldi",
+      "missing": "çatışmayan",
+      "more": "daha çox",
+      "must": "mütləq / etməlidir",
+      "network": "şəbəkə",
+      "night": "gecə",
+      "of": "-ın / -in",
+      "on": "üzərində / -da",
+      "open": "açıq",
+      "payment": "ödəniş",
+      "please": "zəhmət olmasa",
+      "portion": "hissə",
+      "prevent": "qarşısını almaq",
+      "process": "proses",
+      "protects": "qoruyur",
+      "read": "oxumaq",
+      "recorded": "qeydə alınmış",
+      "records": "qeydlər",
+      "regularly": "müntəzəm olaraq",
+      "remote": "uzaqdan",
+      "report": "hesabat",
+      "reported": "bildirildi",
+      "required": "tələb olunan",
+      "reviewed": "nəzərdən keçirdi",
+      "risk": "risk",
+      "secure": "təhlükəsiz",
+      "security": "təhlükəsizlik",
+      "selected": "seçilmiş",
+      "sending": "göndərmək",
+      "sensitive": "həssas",
+      "steal": "oğurlamaq",
+      "step": "addım",
+      "stored": "saxlanılır",
+      "sufficient": "kifayət qədər",
+      "support": "dəstəkləmək",
+      "system": "sistem",
+      "task": "tapşırıq",
+      "test": "test etmək",
+      "the": "müəyyən artikl",
+      "this": "bu",
+      "to": "-a / -ə / üçün",
+      "tomorrow": "sabah",
+      "trace": "izləmək",
+      "transaction": "əməliyyat",
+      "transactions": "əməliyyatlar",
+      "two-factor": "iki faktorlu",
+      "unauthorized": "icazəsiz",
+      "use": "istifadə etmək",
+      "used": "istifadə etdi",
+      "users": "istifadəçilər",
+      "verify": "yoxlamaq / təsdiqləmək",
+      "vulnerability": "zəiflik",
+      "want": "istəmək",
+      "we": "biz",
+      "whether": "olub-olmadığını",
+      "who": "kim",
+      "with": "ilə",
+      "within": "ərzində"
+    };
+
+    function normalizeWord(value) {
+      return String(value).toLowerCase().replace(/^[^a-z0-9-]+|[^a-z0-9-]+$/g, "");
+    }
+
+    function translationForToken(token, fallback = "") {
+      const key = normalizeWord(token);
+      return sentenceTranslations[key] || fallback || "Tərcümə əlavə edilməyib";
+    }
+
+    function renderSentenceWithTooltips(sentence, keyword, keywordTranslation) {
+      return sentence.split(/(\s+)/).map((part) => {
+        if (/^\s+$/.test(part)) return part;
+        const clean = normalizeWord(part);
+        if (!clean || part.includes("______")) return escapeHtml(part);
+        const isKeyword = normalizeWord(keyword) === clean;
+        const translation = isKeyword ? keywordTranslation : translationForToken(part);
+        return `<span class="tooltip-word" data-word="${escapeHtml(part.replace(/^[^A-Za-z0-9-]+|[^A-Za-z0-9-]+$/g, ""))}" data-translation="${escapeHtml(translation)}">${escapeHtml(part)}</span>`;
+      }).join("");
+    }
+
+    function addWordToDictionary(word, translation, category = "Şəxsi lüğət") {
+      if (!word || !translation || translation === "Tərcümə əlavə edilməyib") return false;
+      state.customWords = state.customWords || [];
+      const exists = allDictionaryWords().some((item) => item.word.toLowerCase() === word.toLowerCase());
+      if (!exists) {
+        state.customWords.push([word, translation, category]);
+        saveState();
+        renderDictionary();
+      }
+      return true;
+    }
+
+    function renderState() {
+      document.getElementById("streakValue").textContent = `${state.streak || 2} gün`;
+      const difficult = document.getElementById("difficultWords");
+      difficult.innerHTML = "";
+      if (!state.difficult.length) {
+        difficult.innerHTML = '<div class="word-chip">Səhv cavab verilən sözlər burada görünəcək.</div>';
+      } else {
+        state.difficult.slice(-6).forEach((word) => {
+          const item = document.createElement("div");
+          item.className = "word-chip";
+          item.textContent = word;
+          difficult.appendChild(item);
+        });
+      }
+      const score = document.getElementById("testScore");
+      if (state.total > 0) {
+        const percent = Math.round((state.correct / state.total) * 100);
+        score.textContent = `${percent}% (${state.correct}/${state.total})`;
+      }
+      renderDictionary();
+    }
+
+    function buildOptions(correct, index) {
+      const pool = distractors.filter((item) => item !== correct);
+      const options = [correct];
+      for (let step = 0; options.length < 4; step += 1) {
+        const candidate = pool[(index * 3 + step * 5) % pool.length];
+        if (!options.includes(candidate)) options.push(candidate);
+      }
+      return options
+        .map((value, optionIndex) => ({ value, sort: (optionIndex * 7 + index * 3) % 11 }))
+        .sort((a, b) => a.sort - b.sort)
+        .map((item) => item.value);
+    }
+
+    const todayQuestionBank = [
+      { word: "Substantive testing", translation: "mahiyyət üzrə test", category: "Maliyyə auditi", prompt: "Audit prosedurunu tamamla:", sentence: "The auditor performed ______ on revenue transactions to verify the recorded amounts.", correct: "Substantive testing", options: ["Substantive testing", "Cloud storage", "Follow up", "Malware"] },
+      { word: "Control deficiency", translation: "nəzarət çatışmazlığı", category: "Maliyyə auditi", prompt: "Situasiyaya ən uyğun termini seç:", sentence: "A missing approval step in the payment process is reported as a ______.", correct: "Control deficiency", options: ["Control deficiency", "Reconciliation", "Server", "Available"] },
+      { word: "Sampling", translation: "seçmə üsulu", category: "Maliyyə auditi", prompt: "Cümlədə boşluğu doldur:", sentence: "Instead of checking every invoice, the auditor used ______ to test selected transactions.", correct: "Sampling", options: ["Sampling", "Patch", "Issue", "Access rights"] },
+      { word: "Reconciliation", translation: "üzləşdirmə / tutuşdurma", category: "Maliyyə auditi", prompt: "Bank qalığı ilə bağlı düzgün termini seç:", sentence: "Bank ______ confirmed that the cash balance matched the accounting records.", correct: "Reconciliation", options: ["Reconciliation", "Malware", "Confirm", "Control deficiency"] },
+      { word: "Audit evidence", translation: "audit sübutu", category: "Maliyyə auditi", prompt: "Audit nəticəsini əsaslandıran anlayışı seç:", sentence: "The conclusion must be supported by sufficient and appropriate ______.", correct: "Audit evidence", options: ["Audit evidence", "Cloud storage", "Reschedule", "Server"] },
+      { word: "Server", translation: "server", category: "IT", prompt: "IT infrastrukturunda boşluğu doldur:", sentence: "The application runs on a secure ______ in the company network.", correct: "Server", options: ["Server", "Sampling", "Receipt", "Follow up"] },
+      { word: "Cloud storage", translation: "bulud yaddaşı", category: "IT", prompt: "Backup strategiyasına uyğun termini seç:", sentence: "The team keeps backup files in ______ so they can be accessed remotely.", correct: "Cloud storage", options: ["Cloud storage", "Audit evidence", "Deadline", "Control deficiency"] },
+      { word: "Access rights", translation: "giriş hüquqları", category: "IT", prompt: "Təhlükəsizlik nəzarəti üçün düzgün ifadəni seç:", sentence: "User ______ should be reviewed regularly to prevent unauthorized access.", correct: "Access rights", options: ["Access rights", "Reconciliation", "Available", "Sampling"] },
+      { word: "Patch", translation: "yeniləmə düzəlişi", category: "IT", prompt: "Sistem təhlükəsizliyində düzgün sözü seç:", sentence: "The IT team installed a security ______ to fix the vulnerability.", correct: "Patch", options: ["Patch", "Issue", "Substantive testing", "Confirm"] },
+      { word: "Malware", translation: "zərərli proqram", category: "IT", prompt: "Risk ssenarisində düzgün termini seç:", sentence: "The security scan detected ______ that could steal sensitive information.", correct: "Malware", options: ["Malware", "Audit evidence", "Schedule", "Reconciliation"] },
+      { word: "Confirm", translation: "təsdiqləmək", category: "Gündəlik danışıq", prompt: "İş yazışmasında boşluğu doldur:", sentence: "Please ______ the meeting time before the end of the day.", correct: "Confirm", options: ["Confirm", "Patch", "Sampling", "Malware"] },
+      { word: "Reschedule", translation: "vaxtını dəyişmək", category: "Gündəlik danışıq", prompt: "Görüş vaxtı dəyişəndə hansı söz işlənir?", sentence: "Can we ______ the call for tomorrow morning?", correct: "Reschedule", options: ["Reschedule", "Reconciliation", "Server", "Audit evidence"] },
+      { word: "Available", translation: "əlçatan / münasib", category: "Gündəlik danışıq", prompt: "Cümləyə uyğun sözü seç:", sentence: "I am ______ after lunch if you want to discuss the issue.", correct: "Available", options: ["Available", "Access rights", "Patch", "Substantive testing"] },
+      { word: "Issue", translation: "problem / məsələ", category: "Gündəlik danışıq", prompt: "Komanda müzakirəsində düzgün sözü seç:", sentence: "We need to discuss this ______ before sending the report.", correct: "Issue", options: ["Issue", "Sampling", "Cloud storage", "Malware"] },
+      { word: "Follow up", translation: "təqib etmək / yenidən əlaqə saxlamaq", category: "Gündəlik danışıq", prompt: "Peşəkar email kontekstində boşluğu doldur:", sentence: "I will ______ with the client next week about the open items.", correct: "Follow up", options: ["Follow up", "Control deficiency", "Server", "Patch"] }
+    ];
+
+    const reviewQuestionBank = [
+      { word: "Audit trail", translation: "audit izi", category: "Maliyyə auditi", prompt: "Transaction history kontekstində düzgün termini seç:", sentence: "The auditor reviewed the ______ to trace who approved each transaction.", correct: "Audit trail", options: ["Audit trail", "Backup", "Deadline", "Database"] },
+      { word: "Materiality", translation: "əhəmiyyətlilik", category: "Maliyyə auditi", prompt: "Audit qərarverməsində hansı anlayış istifadə olunur?", sentence: "Auditors use ______ to decide whether an error could influence financial decisions.", correct: "Materiality", options: ["Materiality", "Receipt", "Firewall", "Appointment"] },
+      { word: "Internal control", translation: "daxili nəzarət", category: "Maliyyə auditi", prompt: "Fraud riskini azaltmaq üçün uyğun ifadəni seç:", sentence: "Strong ______ helps reduce the risk of fraud and error.", correct: "Internal control", options: ["Internal control", "Request", "Encryption", "Schedule"] },
+      { word: "Misstatement", translation: "yanlış təqdimat", category: "Maliyyə auditi", prompt: "Financial report kontekstində düzgün termini seç:", sentence: "The financial report contained a material ______ that required correction.", correct: "Misstatement", options: ["Misstatement", "Authentication", "Appointment", "Backup"] },
+      { word: "Compliance", translation: "uyğunluq", category: "Maliyyə auditi", prompt: "Standartlara riayət etmə kontekstində boşluğu doldur:", sentence: "The company must ensure ______ with accounting standards.", correct: "Compliance", options: ["Compliance", "Receipt", "Firewall", "Database"] },
+      { word: "Firewall", translation: "təhlükəsizlik divarı", category: "IT", prompt: "Network security üçün düzgün termini seç:", sentence: "The ______ blocked unauthorized access to the company network.", correct: "Firewall", options: ["Firewall", "Audit trail", "Deadline", "Request"] },
+      { word: "Database", translation: "məlumat bazası", category: "IT", prompt: "Data storage kontekstində boşluğu doldur:", sentence: "Customer records are stored in a secure ______.", correct: "Database", options: ["Database", "Materiality", "Appointment", "Receipt"] },
+      { word: "Encryption", translation: "şifrələmə", category: "IT", prompt: "Sensitive data üçün düzgün nəzarəti seç:", sentence: "______ protects sensitive data from being read by unauthorized users.", correct: "Encryption", options: ["Encryption", "Schedule", "Misstatement", "Request"] },
+      { word: "Backup", translation: "ehtiyat nüsxə", category: "IT", prompt: "Data recovery üçün düzgün termini seç:", sentence: "We create a ______ of the system every night.", correct: "Backup", options: ["Backup", "Compliance", "Appointment", "Audit trail"] },
+      { word: "Authentication", translation: "kimlik doğrulama", category: "IT", prompt: "Login security kontekstində boşluğu doldur:", sentence: "Two-factor ______ makes the account more secure.", correct: "Authentication", options: ["Authentication", "Receipt", "Internal control", "Deadline"] },
+      { word: "Appointment", translation: "görüş / təyin olunmuş vaxt", category: "Gündəlik danışıq", prompt: "Calendar kontekstində düzgün sözü seç:", sentence: "I have an ______ with my manager at 10 a.m.", correct: "Appointment", options: ["Appointment", "Firewall", "Misstatement", "Backup"] },
+      { word: "Deadline", translation: "son tarix", category: "Gündəlik danışıq", prompt: "Task management üçün düzgün sözü seç:", sentence: "The ______ for this task is Friday.", correct: "Deadline", options: ["Deadline", "Encryption", "Audit trail", "Database"] },
+      { word: "Receipt", translation: "qəbz", category: "Gündəlik danışıq", prompt: "Payment sonrası hansı sənəd saxlanılır?", sentence: "Please keep the ______ after payment.", correct: "Receipt", options: ["Receipt", "Authentication", "Materiality", "Request"] },
+      { word: "Schedule", translation: "cədvəl / plan", category: "Gündəlik danışıq", prompt: "Daily planning kontekstində boşluğu doldur:", sentence: "My ______ is very busy today.", correct: "Schedule", options: ["Schedule", "Compliance", "Firewall", "Misstatement"] },
+      { word: "Request", translation: "sorğu / xahiş", category: "Gündəlik danışıq", prompt: "Information asking kontekstində düzgün sözü seç:", sentence: "I sent a ______ for more information.", correct: "Request", options: ["Request", "Internal control", "Backup", "Appointment"] }
+    ];
+
+    function renderTest(mode) {
+      activeTestMode = mode;
+      const questions = mode === "today" ? todayQuestionBank : reviewQuestionBank;
+      const title = mode === "today" ? "Bugünkü 15 söz testi" : "Dünənki 15 söz təkrarı";
+      document.getElementById("testModalTitle").textContent = title;
+      document.querySelectorAll(".test-tab").forEach((tab) => {
+        tab.classList.toggle("active", tab.dataset.testTab === mode);
+      });
+
+      const testList = document.getElementById("testList");
+      testList.innerHTML = questions.map((question, index) => {
+        const letters = ["A", "B", "C", "D"];
+        return `
+          <div class="test-question">
+            <strong>${index + 1}. ${escapeHtml(question.prompt)}</strong>
+            <p>${renderSentenceWithTooltips(question.sentence, question.word, question.translation)}</p>
+            <p class="note">${escapeHtml(question.category)} üzrə kontekst sualı. Hər sözün üstünə mouse aparanda tərcümə görünür; sözə klikləsən, lüğətə əlavə olunur.</p>
+            <div class="options" data-quiz data-correct="${escapeHtml(question.correct)}" data-word="${escapeHtml(question.word)}">
+              ${question.options.map((option, optionIndex) => `<button class="option" type="button" data-choice="${escapeHtml(option)}">${letters[optionIndex]}. ${escapeHtml(option)}</button>`).join("")}
+            </div>
+            <div class="answer-feedback" aria-live="polite"></div>
+          </div>
+        `;
+      }).join("");
+      bindQuizButtons(testList);
+    }
+
+    function bindQuizButtons(scope) {
+      scope.querySelectorAll("[data-quiz]").forEach((quiz) => {
+        const correct = quiz.dataset.correct;
+        const word = quiz.dataset.word || "Bu söz";
+        const feedback = quiz.parentElement.querySelector(".answer-feedback");
+        quiz.querySelectorAll(".option").forEach((button) => {
+          button.addEventListener("click", () => {
+            const alreadyAnswered = quiz.dataset.answered === "true";
+            quiz.dataset.answered = "true";
+            quiz.querySelectorAll(".option").forEach((option) => {
+              option.classList.remove("correct", "wrong");
+              if (option.dataset.choice === correct) option.classList.add("correct");
+            });
+
+            if (!alreadyAnswered) state.total += 1;
+            if (button.dataset.choice === correct) {
+              if (!alreadyAnswered) state.correct += 1;
+              feedback.textContent = `Düzgün cavab! ${word} - ${correct}.`;
+              feedback.className = "answer-feedback success";
+            } else {
+              button.classList.add("wrong");
+              if (!state.difficult.includes(word)) state.difficult.push(word);
+              feedback.textContent = "Bu cavab səhvdir. Düzgün cavab yaşıl fonda göstərildi və söz təkrar siyahısına əlavə edildi.";
+              feedback.className = "answer-feedback retry";
+            }
+            saveState();
+            renderState();
+          });
+        });
+      });
+    }
+
+    function openTests(mode = "today") {
+      renderTest(mode);
+      const modal = document.getElementById("testModal");
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeTests() {
+      const modal = document.getElementById("testModal");
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    function openDictionary() {
+      renderDictionary();
+      const modal = document.getElementById("dictionaryModal");
+      modal.classList.add("is-open");
+      modal.setAttribute("aria-hidden", "false");
+    }
+
+    function closeDictionary() {
+      const modal = document.getElementById("dictionaryModal");
+      modal.classList.remove("is-open");
+      modal.setAttribute("aria-hidden", "true");
+    }
+
+    function allDictionaryWords() {
+      return [...reviewWords, ...todayWords, ...(state.customWords || [])]
+        .map(([word, translation, category]) => ({ word, translation, category }))
+        .sort((a, b) => a.word.localeCompare(b.word, "en"));
+    }
+
+    function renderDictionary() {
+      const list = document.getElementById("dictionaryList");
+      if (!list) return;
+      const search = document.getElementById("dictionarySearch").value.trim().toLowerCase();
+      const category = document.getElementById("dictionaryCategory").value;
+      const words = allDictionaryWords().filter((item) => {
+        const matchesCategory = category === "all" || item.category === category;
+        const matchesSearch = !search || item.word.toLowerCase().includes(search) || item.translation.toLowerCase().includes(search);
+        return matchesCategory && matchesSearch;
+      });
+      list.innerHTML = words.map((item) => `
+        <div class="dict-card">
+          <strong>${escapeHtml(item.word)}</strong>
+          <span>${escapeHtml(item.translation)} · ${escapeHtml(item.category)}</span>
+        </div>
+      `).join("");
+    }
+
     document.querySelectorAll(".flip-card").forEach((card) => {
       card.addEventListener("click", () => card.classList.toggle("is-flipped"));
       card.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") { event.preventDefault(); card.classList.toggle("is-flipped"); }
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          card.classList.toggle("is-flipped");
+        }
       });
     });
-    document.querySelectorAll("[data-quiz]").forEach((quiz) => {
-      const correct = quiz.dataset.correct;
-      const word = quiz.dataset.word;
-      const feedback = quiz.parentElement.querySelector(".answer-feedback");
-      quiz.querySelectorAll(".option").forEach((button) => {
-        button.addEventListener("click", () => {
-          const answered = quiz.dataset.answered === "true";
-          quiz.dataset.answered = "true";
-          quiz.querySelectorAll(".option").forEach((option) => {
-            option.classList.remove("correct", "wrong");
-            if (option.dataset.choice === correct) option.classList.add("correct");
-          });
-          if (!answered) state.total += 1;
-          if (button.dataset.choice === correct) {
-            if (!answered) state.correct += 1;
-            feedback.textContent = "Düzgün cavab! " + word + " - " + correct + ".";
-            feedback.className = "answer-feedback success";
-          } else {
-            button.classList.add("wrong");
-            if (!state.difficult.includes(word)) state.difficult.push(word);
-            feedback.textContent = "Bu cavab səhvdir. Düzgün cavab yaşıl fonda göstərildi və söz Çətin Sözlər siyahısına əlavə edildi.";
-            feedback.className = "answer-feedback retry";
-          }
-          renderState();
-        });
-      });
+
+    document.querySelectorAll("[data-open-tests]").forEach((button) => {
+      button.addEventListener("click", () => openTests(button.dataset.testMode || "today"));
     });
+    document.querySelector("[data-close-tests]").addEventListener("click", closeTests);
+    document.getElementById("testModal").addEventListener("click", (event) => {
+      if (event.target.id === "testModal") closeTests();
+    });
+    document.querySelectorAll(".test-tab").forEach((tab) => {
+      tab.addEventListener("click", () => renderTest(tab.dataset.testTab));
+    });
+    document.getElementById("testList").addEventListener("click", (event) => {
+      const token = event.target.closest(".tooltip-word");
+      if (!token) return;
+      const word = token.dataset.word || token.textContent.trim();
+      const translation = token.dataset.translation;
+      const added = addWordToDictionary(word, translation, "Şəxsi lüğət");
+      if (added) {
+        token.classList.add("saved");
+        token.dataset.translation = `${translation} · lüğətə əlavə edildi`;
+      }
+    });
+    document.querySelectorAll("[data-open-dictionary]").forEach((button) => {
+      button.addEventListener("click", openDictionary);
+    });
+    document.querySelector("[data-close-dictionary]").addEventListener("click", closeDictionary);
+    document.getElementById("dictionaryModal").addEventListener("click", (event) => {
+      if (event.target.id === "dictionaryModal") closeDictionary();
+    });
+    document.getElementById("dictionarySearch").addEventListener("input", renderDictionary);
+    document.getElementById("dictionaryCategory").addEventListener("change", renderDictionary);
+    document.getElementById("addWordButton").addEventListener("click", () => {
+      const word = document.getElementById("newWord").value.trim();
+      const translation = document.getElementById("newTranslation").value.trim();
+      const category = document.getElementById("newCategory").value;
+      if (!word || !translation) return;
+      state.customWords = state.customWords || [];
+      state.customWords.push([word, translation, category]);
+      document.getElementById("newWord").value = "";
+      document.getElementById("newTranslation").value = "";
+      saveState();
+      renderDictionary();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        closeTests();
+        closeDictionary();
+      }
+    });
+
     renderState();
   </script>
 </body>
