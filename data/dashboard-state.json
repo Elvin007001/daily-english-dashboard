@@ -1,5 +1,5 @@
 {
-  "dayIndex": 2,
+  "dayIndex": 3,
   "lastRunDate": "2026-06-24",
   "usedWords": [
     "Audit trail",
@@ -31,7 +31,128 @@
     "Reschedule",
     "Available",
     "Issue",
-    "Follow up"
+    "Follow up",
+    "Verification",
+    "Ledger",
+    "Variance",
+    "Depreciation",
+    "Accrual",
+    "Latency",
+    "Bandwidth",
+    "Protocol",
+    "Cache",
+    "Indexing",
+    "Commute",
+    "Groceries",
+    "Recipe",
+    "Errand"
   ],
-  "notes": "Keep the dashboard in Azerbaijani while teaching English words. Avoid repeating usedWords unless they appear in the previous-day review section."
+  "currentWords": [
+    {
+      "word": "Verification",
+      "translation": "Təsdiqləmə",
+      "pronunciation": "ˌvɛrɪfɪˈkeɪʃən",
+      "sentence": "Verification of financial statements is essential before approval.",
+      "category": "Maliyyə auditi"
+    },
+    {
+      "word": "Ledger",
+      "translation": "Əsas kitab",
+      "pronunciation": "ˈlɛdʒər",
+      "sentence": "The accountant updated the ledger at the end of the day.",
+      "category": "Maliyyə auditi"
+    },
+    {
+      "word": "Variance",
+      "translation": "Fərq, dəyişiklik",
+      "pronunciation": "ˈvɛəriəns",
+      "sentence": "We analyzed the variance between budgeted and actual costs.",
+      "category": "Maliyyə auditi"
+    },
+    {
+      "word": "Depreciation",
+      "translation": "Amortizasiya",
+      "pronunciation": "dɪˌpriːʃiˈeɪʃən",
+      "sentence": "Depreciation of fixed assets affects the profit calculation.",
+      "category": "Maliyyə auditi"
+    },
+    {
+      "word": "Accrual",
+      "translation": "Hesablama, toplanma",
+      "pronunciation": "əˈkruːəl",
+      "sentence": "Accrual accounting records revenues and expenses when they occur.",
+      "category": "Maliyyə auditi"
+    },
+    {
+      "word": "Latency",
+      "translation": "Gecikmə",
+      "pronunciation": "ˈleɪtənsi",
+      "sentence": "High latency can slow down internet browsing.",
+      "category": "IT"
+    },
+    {
+      "word": "Bandwidth",
+      "translation": "Zolaq eni",
+      "pronunciation": "ˈbændwɪθ",
+      "sentence": "The new plan offers more bandwidth for faster downloads.",
+      "category": "IT"
+    },
+    {
+      "word": "Protocol",
+      "translation": "Protokol",
+      "pronunciation": "ˈproʊtəˌkɑːl",
+      "sentence": "HTTP is the protocol used for web communication.",
+      "category": "IT"
+    },
+    {
+      "word": "Cache",
+      "translation": "Keshləmə",
+      "pronunciation": "kæʃ",
+      "sentence": "Clearing the cache can fix loading issues in browsers.",
+      "category": "IT"
+    },
+    {
+      "word": "Indexing",
+      "translation": "İndeksləmə",
+      "pronunciation": "ˈɪndɛksɪŋ",
+      "sentence": "Indexing databases improves query performance.",
+      "category": "IT"
+    },
+    {
+      "word": "Commute",
+      "translation": "Gündəlik işə gedib-gəlmək",
+      "pronunciation": "kəˈmjuːt",
+      "sentence": "I commute to work by bus every day.",
+      "category": "Gündəlik danışıq"
+    },
+    {
+      "word": "Groceries",
+      "translation": "Market alış-verişi",
+      "pronunciation": "ˈɡroʊsəriz",
+      "sentence": "She went to buy groceries after work.",
+      "category": "Gündəlik danışıq"
+    },
+    {
+      "word": "Appointment",
+      "translation": "Görüş",
+      "pronunciation": "əˈpɔɪntmənt",
+      "sentence": "I have a dentist appointment at 3 PM.",
+      "category": "Gündəlik danışıq"
+    },
+    {
+      "word": "Recipe",
+      "translation": "Resept",
+      "pronunciation": "ˈrɛsəpi",
+      "sentence": "This recipe is great for a quick dinner.",
+      "category": "Gündəlik danışıq"
+    },
+    {
+      "word": "Errand",
+      "translation": "İş tapşırığı, məsələ",
+      "pronunciation": "ˈɛrənd",
+      "sentence": "I need to run some errands this afternoon.",
+      "category": "Gündəlik danışıq"
+    }
+  ],
+  "notes": "Keep UI Azerbaijani and taught words English. Do not repeat usedWords except review sections."
 }
