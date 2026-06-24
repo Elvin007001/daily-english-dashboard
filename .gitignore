@@ -1,0 +1,19 @@
+# Local Netlify folder
+.netlify
+
+# Local tooling and generated caches
+work/
+node_modules/
+package-lock.json
+
+# Local app experiments
+apps-script/
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+
+# Local output artifacts
+outputs/*.lnk
+outputs/*.zip
+outputs/*.log

@@ -1,0 +1,9 @@
+{
+  "name": "daily-english-dashboard",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate:dashboard": "node scripts/generate-dashboard.mjs"
+  }
+}
