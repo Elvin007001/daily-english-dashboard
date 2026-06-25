@@ -205,6 +205,8 @@
     .tooltip-word:hover::after, .tooltip-word:focus::after, .tooltip-word.show-tip::after { display: block; }
     .tooltip-word.saved { color: var(--teal); border-bottom-style: solid; }
     .keyword-chip { display: inline-block; margin: 10px 0 4px; padding: 7px 11px; border: 1px solid rgba(51, 92, 255, 0.22); border-radius: 999px; background: #eef3ff; color: var(--blue); font-weight: 800; }
+    .tap-translation { display: inline-block; margin-left: 8px; padding: 5px 9px; border-radius: 999px; background: #172033; color: #fff; font-size: 12px; font-weight: 800; vertical-align: middle; }
+    .floating-tooltip { position: fixed; left: 0; top: 0; transform: translate(-50%, calc(-100% - 10px)); display: none; max-width: min(280px, calc(100vw - 32px)); padding: 9px 11px; border-radius: 12px; color: #fff; background: #172033; box-shadow: 0 14px 28px rgba(17, 24, 39, 0.25); font-size: 12px; font-weight: 800; z-index: 9999; pointer-events: none; }
     .dictionary-toolbar, .add-word-form { display: flex; flex-wrap: wrap; gap: 10px; padding: 0 22px 18px; }
     .dictionary-toolbar input, .dictionary-toolbar select, .add-word-form input, .add-word-form select {
       border: 1px solid var(--line);
@@ -682,7 +684,7 @@
         if (!clean || part.includes("______")) return escapeHtml(part);
         const isKeyword = normalizeWord(keyword) === clean;
         const translation = isKeyword ? keywordTranslation : translationForToken(part);
-        return `<span class="tooltip-word" data-word="${escapeHtml(part.replace(/^[^A-Za-z0-9-]+|[^A-Za-z0-9-]+$/g, ""))}" data-translation="${escapeHtml(translation)}">${escapeHtml(part)}</span>`;
+        return `<span class="tooltip-word" tabindex="0" title="${escapeHtml(translation)}" data-word="${escapeHtml(part.replace(/^[^A-Za-z0-9-]+|[^A-Za-z0-9-]+$/g, ""))}" data-translation="${escapeHtml(translation)}">${escapeHtml(part)}</span>`;
       }).join("");
     }
 
@@ -785,7 +787,7 @@
           <div class="test-question">
             <strong>${index + 1}. ${escapeHtml(question.prompt)}</strong>
             <p>${renderSentenceWithTooltips(question.sentence, question.word, question.translation)}</p>
-            <p class="note">Söz ipucu: <span class="tooltip-word keyword-chip" role="button" tabindex="0" data-word="${escapeHtml(question.word)}" data-translation="${escapeHtml(question.translation)}">${escapeHtml(question.word)}</span></p>
+            <p class="note">Söz ipucu: <span class="tooltip-word keyword-chip" role="button" tabindex="0" title="${escapeHtml(question.translation)}" data-word="${escapeHtml(question.word)}" data-translation="${escapeHtml(question.translation)}">${escapeHtml(question.word)}</span></p>
             <p class="note">${escapeHtml(question.category)} üzrə kontekst sualı. Hər sözün üstünə mouse aparanda tərcümə görünür; sözə klikləsən, lüğətə əlavə olunur.</p>
             <div class="options" data-quiz data-correct="${escapeHtml(question.correct)}" data-word="${escapeHtml(question.word)}">
               ${question.options.map((option, optionIndex) => `<button class="option" type="button" data-choice="${escapeHtml(option)}">${letters[optionIndex]}. ${escapeHtml(option)}</button>`).join("")}
@@ -906,11 +908,49 @@
       const translation = token.dataset.translation;
       const added = addWordToDictionary(word, translation, "Şəxsi lüğət");
       token.classList.toggle("show-tip");
+      showInlineTranslation(token, translation);
       if (added) {
         token.classList.add("saved");
         token.dataset.translation = `${translation} · lüğətə əlavə edildi`;
+        token.title = token.dataset.translation;
       }
     });
+    const floatingTooltip = document.createElement("div");
+    floatingTooltip.className = "floating-tooltip";
+    document.body.appendChild(floatingTooltip);
+    function showFloatingTooltip(token) {
+      const text = token.dataset.translation || token.title;
+      if (!text) return;
+      const rect = token.getBoundingClientRect();
+      floatingTooltip.textContent = text;
+      floatingTooltip.style.left = `${Math.min(Math.max(rect.left + rect.width / 2, 16), window.innerWidth - 16)}px`;
+      floatingTooltip.style.top = `${Math.max(rect.top, 18)}px`;
+      floatingTooltip.style.display = "block";
+    }
+    function hideFloatingTooltip() {
+      floatingTooltip.style.display = "none";
+    }
+    function showInlineTranslation(token, translation) {
+      let label = token.nextElementSibling;
+      if (!label || !label.classList.contains("tap-translation")) {
+        label = document.createElement("span");
+        label.className = "tap-translation";
+        token.insertAdjacentElement("afterend", label);
+      }
+      label.textContent = translation || "Tərcümə əlavə edilməyib";
+    }
+    document.getElementById("testList").addEventListener("mouseover", (event) => {
+      const token = event.target.closest(".tooltip-word");
+      if (token) showFloatingTooltip(token);
+    });
+    document.getElementById("testList").addEventListener("mouseout", (event) => {
+      if (event.target.closest(".tooltip-word")) hideFloatingTooltip();
+    });
+    document.getElementById("testList").addEventListener("focusin", (event) => {
+      const token = event.target.closest(".tooltip-word");
+      if (token) showFloatingTooltip(token);
+    });
+    document.getElementById("testList").addEventListener("focusout", hideFloatingTooltip);
     document.querySelectorAll("[data-open-dictionary]").forEach((button) => {
       button.addEventListener("click", openDictionary);
     });

@@ -265,7 +265,17 @@ function buildWordOptions(correctItem, words, index) {
 }
 
 function assertFullTemplate(html) {
-  const required = ["dictionaryModal", "renderDictionary", "todayQuestionBank", "reviewQuestionBank", "sentenceTranslations", "data-open-dictionary"];
+  const required = [
+    "dictionaryModal",
+    "renderDictionary",
+    "todayQuestionBank",
+    "reviewQuestionBank",
+    "sentenceTranslations",
+    "data-open-dictionary",
+    "keyword-chip",
+    "showInlineTranslation",
+    "floating-tooltip"
+  ];
   for (const marker of required) {
     if (!html.includes(marker)) {
       throw new Error(`Current dashboard is not the full template. Missing: ${marker}`);
@@ -290,7 +300,22 @@ function validateLesson(lesson) {
 }
 
 function validateHtml(html) {
-  const required = ["dictionaryModal", "renderDictionary", "todayQuestionBank", "reviewQuestionBank", "flip-card", "flip-inner", "localStorage", "data-correct", "apple-mobile-web-app-capable", "Çətin Sözlər"];
+  const required = [
+    "dictionaryModal",
+    "renderDictionary",
+    "todayQuestionBank",
+    "reviewQuestionBank",
+    "flip-card",
+    "flip-inner",
+    "localStorage",
+    "data-correct",
+    "apple-mobile-web-app-capable",
+    "Çətin Sözlər",
+    "keyword-chip",
+    "showInlineTranslation",
+    "floating-tooltip",
+    "tap-translation"
+  ];
   for (const marker of required) {
     if (!html.includes(marker)) throw new Error(`Generated HTML is missing required marker: ${marker}`);
   }
