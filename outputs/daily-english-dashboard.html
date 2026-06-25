@@ -665,7 +665,51 @@
       "whether": "olub-olmadığını",
       "who": "kim",
       "with": "ilə",
-      "within": "ərzində"
+      "within": "ərzində",
+      "ensures": "təmin edir",
+      "organization": "təşkilat",
+      "follows": "əməl edir",
+      "legal": "hüquqi",
+      "standards": "standartlar",
+      "performed": "icra etdi",
+      "potential": "potensial",
+      "weaknesses": "zəifliklər",
+      "thoroughly": "ətraflı",
+      "issued": "verdi / dərc etdi",
+      "unqualified": "şərtsiz",
+      "increases": "artırır",
+      "remotely": "uzaqdan",
+      "improves": "yaxşılaşdırır",
+      "performance": "performans",
+      "web": "veb",
+      "servers": "serverlər",
+      "monitors": "izləyir",
+      "traffic": "trafik",
+      "threats": "təhdidlər",
+      "discover": "kəşf etmək",
+      "patterns": "nümunələr",
+      "large": "böyük",
+      "datasets": "məlumat dəstləri",
+      "let’s": "gəlin",
+      "grab": "götürmək / içmək",
+      "coffee": "qəhvə",
+      "catch": "çatmaq / yetişmək",
+      "up": "yuxarı / tamamlanma",
+      "weekend": "həftəsonu",
+      "she’s": "o ...-dır",
+      "always": "həmişə",
+      "busy": "məşğul",
+      "schedule": "cədvəl",
+      "hand": "əl / kömək",
+      "boxes": "qutular",
+      "make": "etmək / əmin olmaq",
+      "sure": "əmin",
+      "your": "sənin / sizin",
+      "software": "proqram təminatı",
+      "decided": "qərar verdik",
+      "early": "erkən",
+      "avoid": "qaçmaq",
+      "traffic": "trafik"
     };
 
     function normalizeWord(value) {
@@ -674,7 +718,8 @@
 
     function translationForToken(token, fallback = "") {
       const key = normalizeWord(token);
-      return sentenceTranslations[key] || fallback || "Tərcümə əlavə edilməyib";
+      const bankMatch = [...todayQuestionBank, ...reviewQuestionBank].find((item) => normalizeWord(item.word) === key);
+      return sentenceTranslations[key] || bankMatch?.translation || fallback || "Tərcümə əlavə edilməyib";
     }
 
     function renderSentenceWithTooltips(sentence, keyword, keywordTranslation) {
@@ -684,20 +729,24 @@
         if (!clean || part.includes("______")) return escapeHtml(part);
         const isKeyword = normalizeWord(keyword) === clean;
         const translation = isKeyword ? keywordTranslation : translationForToken(part);
-        return `<span class="tooltip-word" tabindex="0" title="${escapeHtml(translation)}" data-word="${escapeHtml(part.replace(/^[^A-Za-z0-9-]+|[^A-Za-z0-9-]+$/g, ""))}" data-translation="${escapeHtml(translation)}">${escapeHtml(part)}</span>`;
+        if (!translation || translation === "Tərcümə əlavə edilməyib") return escapeHtml(part);
+        return `<span class="tooltip-word" tabindex="0" title="${escapeHtml(translation)}" data-word="${escapeHtml(part.replace(/^[^A-Za-z0-9-]+|[^A-Za-z0-9-]+$/g, ""))}" data-base-translation="${escapeHtml(translation)}" data-translation="${escapeHtml(translation)}">${escapeHtml(part)}</span>`;
       }).join("");
     }
 
     function addWordToDictionary(word, translation, category = "Şəxsi lüğət") {
-      if (!word || !translation || translation === "Tərcümə əlavə edilməyib") return false;
+      if (!word || !translation || translation === "Tərcümə əlavə edilməyib") {
+        return { saved: false, message: "tərcümə tapılmadı" };
+      }
       state.customWords = state.customWords || [];
       const exists = allDictionaryWords().some((item) => item.word.toLowerCase() === word.toLowerCase());
       if (!exists) {
         state.customWords.push([word, translation, category]);
         saveState();
         renderDictionary();
+        return { saved: true, message: "lüğətə əlavə edildi" };
       }
-      return true;
+      return { saved: true, message: "lüğətdə saxlanıldı" };
     }
 
     function renderState() {
@@ -787,7 +836,7 @@
           <div class="test-question">
             <strong>${index + 1}. ${escapeHtml(question.prompt)}</strong>
             <p>${renderSentenceWithTooltips(question.sentence, question.word, question.translation)}</p>
-            <p class="note">Söz ipucu: <span class="tooltip-word keyword-chip" role="button" tabindex="0" title="${escapeHtml(question.translation)}" data-word="${escapeHtml(question.word)}" data-translation="${escapeHtml(question.translation)}">${escapeHtml(question.word)}</span></p>
+            <p class="note">Söz ipucu: <span class="tooltip-word keyword-chip" role="button" tabindex="0" title="${escapeHtml(question.translation)}" data-word="${escapeHtml(question.word)}" data-base-translation="${escapeHtml(question.translation)}" data-translation="${escapeHtml(question.translation)}">${escapeHtml(question.word)}</span></p>
             <p class="note">${escapeHtml(question.category)} üzrə kontekst sualı. Hər sözün üstünə mouse aparanda tərcümə görünür; sözə klikləsən, lüğətə əlavə olunur.</p>
             <div class="options" data-quiz data-correct="${escapeHtml(question.correct)}" data-word="${escapeHtml(question.word)}">
               ${question.options.map((option, optionIndex) => `<button class="option" type="button" data-choice="${escapeHtml(option)}">${letters[optionIndex]}. ${escapeHtml(option)}</button>`).join("")}
@@ -905,15 +954,17 @@
       const token = event.target.closest(".tooltip-word");
       if (!token) return;
       const word = token.dataset.word || token.textContent.trim();
-      const translation = token.dataset.translation;
-      const added = addWordToDictionary(word, translation, "Şəxsi lüğət");
+      const translation = token.dataset.baseTranslation || token.dataset.translation;
+      const result = addWordToDictionary(word, translation, "Şəxsi lüğət");
       token.classList.toggle("show-tip");
-      showInlineTranslation(token, translation);
-      if (added) {
+      if (result.saved) {
         token.classList.add("saved");
-        token.dataset.translation = `${translation} · lüğətə əlavə edildi`;
-        token.title = token.dataset.translation;
       }
+      const statusText = `${translation || "Tərcümə əlavə edilməyib"} · ${result.message}`;
+      token.dataset.baseTranslation = translation || "";
+      token.dataset.translation = statusText;
+      token.title = statusText;
+      showInlineTranslation(token, statusText);
     });
     const floatingTooltip = document.createElement("div");
     floatingTooltip.className = "floating-tooltip";

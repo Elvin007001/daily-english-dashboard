@@ -274,7 +274,8 @@ function assertFullTemplate(html) {
     "data-open-dictionary",
     "keyword-chip",
     "showInlineTranslation",
-    "floating-tooltip"
+    "floating-tooltip",
+    "data-base-translation"
   ];
   for (const marker of required) {
     if (!html.includes(marker)) {
@@ -314,7 +315,8 @@ function validateHtml(html) {
     "keyword-chip",
     "showInlineTranslation",
     "floating-tooltip",
-    "tap-translation"
+    "tap-translation",
+    "data-base-translation"
   ];
   for (const marker of required) {
     if (!html.includes(marker)) throw new Error(`Generated HTML is missing required marker: ${marker}`);
