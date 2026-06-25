@@ -223,6 +223,12 @@
     .word-chip { border: 1px solid #ffd6d3; background: #fff7f6; color: #b42318; border-radius: 16px; padding: 14px; font-weight: 800; }
     .certificate { padding: 28px; background: linear-gradient(135deg, rgba(183, 121, 31, 0.16), rgba(51, 92, 255, 0.10)), #ffffff; }
     .certificate-card { border: 1px solid rgba(183, 121, 31, 0.32); border-radius: 22px; padding: 26px; background: linear-gradient(135deg, #fffaf0, #ffffff); box-shadow: 0 16px 34px rgba(183, 121, 31, 0.12); }
+    .sync-panel { display: grid; gap: 12px; padding: 22px; }
+    .sync-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+    .sync-controls input { min-width: min(320px, 100%); flex: 1; border: 1px solid var(--line); border-radius: 14px; padding: 12px 14px; font: inherit; }
+    .sync-status { border: 1px solid #d7e3ff; background: #f4f7ff; color: #2443a6; border-radius: 14px; padding: 12px 14px; font-weight: 800; line-height: 1.5; }
+    .sync-status.ready { border-color: #b7ebd3; background: #ecfdf3; color: #067647; }
+    .sync-status.warning { border-color: #fedf89; background: #fffaeb; color: #93370d; }
 
     @media (max-width: 760px) {
       .shell { width: min(100% - 20px, 1180px); padding-top: 14px; }
@@ -265,6 +271,19 @@
         <div class="feature-card"><h3>Həftəlik progress</h3><p>Hədəf: 75 söz. Hazırda: 75 söz.</p><div class="progress-track"><div class="progress-fill" style="--value:100%"></div></div></div>
         <div class="feature-card"><h3>Aylıq progress</h3><p>Hədəf: 300 söz. Hazırda: 75 söz.</p><div class="progress-track"><div class="progress-fill" style="--value:25%"></div></div></div>
         <div class="feature-card"><h3>Level sistemi</h3><p>İndiki mərhələ: Beginner. 150 sözdən sonra Intermediate açılır.</p><div class="level-band"><span class="level active">Beginner</span><span class="level">Intermediate</span><span class="level">Advanced</span></div></div>
+      </div>
+    </section>
+
+    <section class="section" id="cloudSyncSection">
+      <div class="section-header"><h2>Cloud Sync</h2><span class="pill" style="background:#e9fbf7;color:var(--teal);">Telefon + kompüter</span></div>
+      <div class="sync-panel">
+        <p class="note" style="margin:0;">Eyni sync kodunu telefonda və kompüterdə yazanda test cavabları, çətin sözlər və şəxsi lüğət mərkəzi yaddaşla sinxron saxlanacaq.</p>
+        <div class="sync-controls">
+          <input id="syncCodeInput" type="password" autocomplete="off" placeholder="Şəxsi sync kodu, məsələn: elvin-english-2026">
+          <button class="primary-action" type="button" id="saveSyncCodeButton">Sync kodunu saxla</button>
+          <button class="secondary-action" type="button" id="syncNowButton">İndi sinxron et</button>
+        </div>
+        <div class="sync-status warning" id="cloudSyncStatus">Cloud sync kodu hazırdır, amma backend hələ qoşulmayıb.</div>
       </div>
     </section>
 
@@ -475,6 +494,13 @@
   <script>
     const storageKey = "premiumVocabularyLab";
     const state = JSON.parse(localStorage.getItem(storageKey) || '{"streak":5,"correct":0,"total":0,"difficult":[],"customWords":[]}');
+    const syncCodeKey = "premiumVocabularyLabSyncCode";
+    const cloudSyncConfig = {
+      enabled: false,
+      supabaseUrl: "",
+      supabaseAnonKey: "",
+      table: "dashboard_sync"
+    };
 
     const todayWords = [
       ["Substantive procedure","Mahiyyət üzrə audit proseduru","Maliyyə auditi"],
@@ -546,9 +572,23 @@
     ];
 
     let activeTestMode = "today";
+    let syncTimer = null;
 
-    function saveState() {
+    function ensureStateShape() {
+      state.difficult ||= [];
+      state.customWords ||= [];
+      state.answers ||= {};
+      state.correct ||= 0;
+      state.total ||= 0;
+      state.streak ||= 5;
+      state.updatedAt ||= new Date().toISOString();
+    }
+
+    function saveState(options = {}) {
+      ensureStateShape();
+      state.updatedAt = new Date().toISOString();
       localStorage.setItem(storageKey, JSON.stringify(state));
+      if (!options.skipCloud) queueCloudSync();
     }
 
     function escapeHtml(value) {
@@ -765,6 +805,7 @@
     }
 
     function renderState() {
+      ensureStateShape();
       document.getElementById("streakValue").textContent = `${state.streak || 5} gün`;
       const difficult = document.getElementById("difficultWords");
       difficult.innerHTML = "";
@@ -784,6 +825,115 @@
         score.textContent = `${percent}% (${state.correct}/${state.total})`;
       }
       renderDictionary();
+    }
+
+    function cloudConfigured() {
+      return Boolean(cloudSyncConfig.enabled && cloudSyncConfig.supabaseUrl && cloudSyncConfig.supabaseAnonKey);
+    }
+
+    function getSyncCode() {
+      return localStorage.getItem(syncCodeKey) || "";
+    }
+
+    async function syncIdFromCode(code) {
+      const bytes = new TextEncoder().encode(code.trim());
+      const digest = await crypto.subtle.digest("SHA-256", bytes);
+      return Array.from(new Uint8Array(digest)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
+    }
+
+    function setCloudStatus(message, tone = "warning") {
+      const status = document.getElementById("cloudSyncStatus");
+      if (!status) return;
+      status.textContent = message;
+      status.className = `sync-status ${tone}`;
+    }
+
+    function cloudHeaders() {
+      return {
+        "apikey": cloudSyncConfig.supabaseAnonKey,
+        "Authorization": `Bearer ${cloudSyncConfig.supabaseAnonKey}`,
+        "Content-Type": "application/json",
+        "Prefer": "resolution=merge-duplicates,return=representation"
+      };
+    }
+
+    function mergeStates(localState, remoteState) {
+      if (!remoteState || typeof remoteState !== "object") return localState;
+      localState.streak = Math.max(Number(localState.streak || 0), Number(remoteState.streak || 0));
+      localState.correct = Math.max(Number(localState.correct || 0), Number(remoteState.correct || 0));
+      localState.total = Math.max(Number(localState.total || 0), Number(remoteState.total || 0));
+      localState.difficult = [...new Set([...(localState.difficult || []), ...(remoteState.difficult || [])])];
+      const wordMap = new Map();
+      [...(remoteState.customWords || []), ...(localState.customWords || [])].forEach((row) => {
+        if (Array.isArray(row) && row[0]) wordMap.set(row[0].toLowerCase(), row);
+      });
+      localState.customWords = [...wordMap.values()];
+      localState.answers = { ...(remoteState.answers || {}), ...(localState.answers || {}) };
+      localState.updatedAt = new Date().toISOString();
+      return localState;
+    }
+
+    async function pullCloudState() {
+      if (!cloudConfigured()) {
+        setCloudStatus("Cloud sync kodu hazırdır, amma Supabase backend hələ qoşulmayıb.", "warning");
+        return false;
+      }
+      const code = getSyncCode();
+      if (!code) {
+        setCloudStatus("Cihazlar arasında sync üçün şəxsi sync kodu yaz və saxla.", "warning");
+        return false;
+      }
+      const syncId = await syncIdFromCode(code);
+      const url = `${cloudSyncConfig.supabaseUrl}/rest/v1/${cloudSyncConfig.table}?sync_id=eq.${encodeURIComponent(syncId)}&select=state,updated_at&limit=1`;
+      const response = await fetch(url, { headers: cloudHeaders() });
+      if (!response.ok) throw new Error("Cloud state oxunmadı.");
+      const rows = await response.json();
+      if (rows[0]?.state) {
+        mergeStates(state, rows[0].state);
+        saveState({ skipCloud: true });
+        renderState();
+      }
+      setCloudStatus("Cloud sync aktivdir. Bu cihaz mərkəzi yaddaşla uyğunlaşdırıldı.", "ready");
+      return true;
+    }
+
+    async function pushCloudState() {
+      if (!cloudConfigured()) return false;
+      const code = getSyncCode();
+      if (!code) return false;
+      const syncId = await syncIdFromCode(code);
+      ensureStateShape();
+      const payload = [{
+        sync_id: syncId,
+        state,
+        updated_at: new Date().toISOString()
+      }];
+      const url = `${cloudSyncConfig.supabaseUrl}/rest/v1/${cloudSyncConfig.table}?on_conflict=sync_id`;
+      const response = await fetch(url, {
+        method: "POST",
+        headers: cloudHeaders(),
+        body: JSON.stringify(payload)
+      });
+      if (!response.ok) throw new Error("Cloud state yazılmadı.");
+      setCloudStatus("Cavablar cloud yaddaşa yazıldı. Telefon və kompüter eyni sync kodu ilə bunu görəcək.", "ready");
+      return true;
+    }
+
+    function queueCloudSync() {
+      if (!cloudConfigured() || !getSyncCode()) return;
+      clearTimeout(syncTimer);
+      syncTimer = setTimeout(() => {
+        pushCloudState().catch(() => setCloudStatus("Cloud sync alınmadı. İnternet və backend ayarlarını yoxla.", "warning"));
+      }, 700);
+    }
+
+    async function syncNow() {
+      try {
+        await pullCloudState();
+        await pushCloudState();
+      } catch (error) {
+        setCloudStatus("Cloud sync alınmadı. Backend ayarları aktiv deyil və ya bağlantı xətası var.", "warning");
+      }
     }
 
     function buildOptions(correct, index) {
@@ -853,7 +1003,7 @@
             <p>${renderSentenceWithTooltips(question.sentence, question.word, question.translation)}</p>
             <p class="note">Söz ipucu: <span class="tooltip-word keyword-chip" role="button" tabindex="0" title="${escapeHtml(question.translation)}" data-word="${escapeHtml(question.word)}" data-base-translation="${escapeHtml(question.translation)}" data-translation="${escapeHtml(question.translation)}">${escapeHtml(question.word)}</span></p>
             <p class="note">${escapeHtml(question.category)} üzrə kontekst sualı. Hər sözün üstünə mouse aparanda tərcümə görünür; sözə klikləsən, lüğətə əlavə olunur.</p>
-            <div class="options" data-quiz data-correct="${escapeHtml(question.correct)}" data-word="${escapeHtml(question.word)}">
+            <div class="options" data-quiz data-key="${escapeHtml(mode)}:${escapeHtml(question.word)}" data-correct="${escapeHtml(question.correct)}" data-word="${escapeHtml(question.word)}">
               ${question.options.map((option, optionIndex) => `<button class="option" type="button" data-choice="${escapeHtml(option)}">${letters[optionIndex]}. ${escapeHtml(option)}</button>`).join("")}
             </div>
             <div class="answer-feedback" aria-live="polite"></div>
@@ -861,13 +1011,38 @@
         `;
       }).join("");
       bindQuizButtons(testList);
+      applySavedAnswers(testList);
       bindTooltipWords(testList);
+    }
+
+    function applySavedAnswers(scope) {
+      ensureStateShape();
+      scope.querySelectorAll("[data-quiz]").forEach((quiz) => {
+        const saved = state.answers[quiz.dataset.key];
+        if (!saved) return;
+        const correct = quiz.dataset.correct;
+        const feedback = quiz.parentElement.querySelector(".answer-feedback");
+        quiz.dataset.answered = "true";
+        quiz.querySelectorAll(".option").forEach((option) => {
+          option.classList.remove("correct", "wrong");
+          if (option.dataset.choice === correct) option.classList.add("correct");
+          if (option.dataset.choice === saved.choice && saved.choice !== correct) option.classList.add("wrong");
+        });
+        if (saved.choice === correct) {
+          feedback.textContent = `Bu sual artıq cavablanıb: düzgün cavab seçilib.`;
+          feedback.className = "answer-feedback success";
+        } else {
+          feedback.textContent = `Bu sual artıq cavablanıb: səhv seçim qırmızı, düzgün cavab yaşıl göstərilir.`;
+          feedback.className = "answer-feedback retry";
+        }
+      });
     }
 
     function bindQuizButtons(scope) {
       scope.querySelectorAll("[data-quiz]").forEach((quiz) => {
         const correct = quiz.dataset.correct;
         const word = quiz.dataset.word || "Bu söz";
+        const key = quiz.dataset.key;
         const feedback = quiz.parentElement.querySelector(".answer-feedback");
         quiz.querySelectorAll(".option").forEach((button) => {
           button.addEventListener("click", () => {
@@ -889,6 +1064,14 @@
               feedback.textContent = "Bu cavab səhvdir. Düzgün cavab yaşıl fonda göstərildi və söz təkrar siyahısına əlavə edildi.";
               feedback.className = "answer-feedback retry";
             }
+            state.answers ||= {};
+            state.answers[key] = {
+              choice: button.dataset.choice,
+              correct,
+              word,
+              mode: activeTestMode,
+              answeredAt: new Date().toISOString()
+            };
             saveState();
             renderState();
           });
@@ -1057,6 +1240,16 @@
       saveState();
       renderDictionary();
     });
+    document.getElementById("saveSyncCodeButton").addEventListener("click", async () => {
+      const code = document.getElementById("syncCodeInput").value.trim();
+      if (!code) {
+        setCloudStatus("Sync kodu boş ola bilməz.", "warning");
+        return;
+      }
+      localStorage.setItem(syncCodeKey, code);
+      await syncNow();
+    });
+    document.getElementById("syncNowButton").addEventListener("click", syncNow);
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
         closeTests();
@@ -1064,6 +1257,13 @@
       }
     });
 
+    ensureStateShape();
+    document.getElementById("syncCodeInput").value = getSyncCode();
+    if (cloudConfigured()) {
+      syncNow();
+    } else {
+      setCloudStatus("Cloud sync kodu hazırdır, amma backend hələ qoşulmayıb. Supabase URL və anon key əlavə ediləndən sonra cihazlar arası sync işləyəcək.", "warning");
+    }
     renderState();
   </script>
 </body>

@@ -45,7 +45,7 @@ html = replaceJsArray(html, "reviewWords", previousWords.map((item) => [item.wor
 html = replaceJsArray(html, "distractors", unique([...previousWords, ...todayWords].map((item) => item.translation)));
 html = replaceQuestionBank(html, "todayQuestionBank", todayWords);
 html = replaceQuestionBank(html, "reviewQuestionBank", previousWords);
-html = html.replace(/const storageKey = "premiumVocabularyLab";\s*const state = JSON\.parse\(localStorage\.getItem\(storageKey\) \|\| '\{"streak":\d+,"correct":0,"total":0,"difficult":\[\],"customWords":\[\]\}'\);/, `const storageKey = "premiumVocabularyLab";\n    const state = JSON.parse(localStorage.getItem(storageKey) || '{"streak":${dayIndex},"correct":0,"total":0,"difficult":[],"customWords":[]}');`);
+html = html.replace(/const storageKey = "premiumVocabularyLab";\s*const state = JSON\.parse\(localStorage\.getItem\(storageKey\) \|\| '\{"streak":\d+,"correct":0,"total":0,"difficult":\[\],"customWords":\[\](?:,"answers":\{\})?\}'\);/, `const storageKey = "premiumVocabularyLab";\n    const state = JSON.parse(localStorage.getItem(storageKey) || '{"streak":${dayIndex},"correct":0,"total":0,"difficult":[],"customWords":[],"answers":{}}');`);
 html = html.replace(/document\.getElementById\("streakValue"\)\.textContent = `\$\{state\.streak \|\| \d+\} gün`;/, `document.getElementById("streakValue").textContent = \`\${state.streak || ${dayIndex}} gün\`;`);
 
 validateHtml(html);
@@ -250,7 +250,10 @@ function assertFullTemplate(html) {
     "dictionaryModal",
     "bindTooltipWords",
     "data-base-translation",
-    "inline-word"
+    "inline-word",
+    "cloudSyncConfig",
+    "applySavedAnswers",
+    "syncCodeKey"
   ];
   for (const marker of required) {
     if (!html.includes(marker)) {
@@ -269,7 +272,10 @@ function validateHtml(html) {
     "data-open-tests",
     "bindTooltipWords",
     "data-base-translation",
-    "inline-word"
+    "inline-word",
+    "cloudSyncConfig",
+    "applySavedAnswers",
+    "syncCodeKey"
   ];
   for (const marker of required) {
     if (!html.includes(marker)) {
