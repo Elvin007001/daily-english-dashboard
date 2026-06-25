@@ -4,6 +4,11 @@ on:
   schedule:
     - cron: "0 6 * * *"
   workflow_dispatch:
+    inputs:
+      force_static:
+        description: "Deploy current public folder without AI update"
+        required: false
+        default: "false"
 
 permissions:
   contents: write
@@ -36,14 +41,18 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: ${{ vars.OPENAI_MODEL || 'gpt-4.1-mini' }}
+          FORCE_STATIC: ${{ github.event.inputs.force_static || 'false' }}
         run: |
-          if [ -n "$OPENAI_API_KEY" ]; then
+          if [ "$FORCE_STATIC" = "true" ]; then
+            echo "force_static=true. Deploying the existing dashboard without AI update."
+          elif [ -n "$OPENAI_API_KEY" ]; then
             npm run generate:dashboard
           else
             echo "OPENAI_API_KEY is not configured. Deploying the existing dashboard without AI update."
           fi
 
       - name: Commit updated dashboard
+        if: ${{ github.event.inputs.force_static != 'true' }}
         run: |
           git config user.name "daily-dashboard-bot"
           git config user.email "daily-dashboard-bot@users.noreply.github.com"

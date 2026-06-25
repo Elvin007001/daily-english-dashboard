@@ -202,8 +202,9 @@
       font-size: 12px;
       z-index: 5;
     }
-    .tooltip-word:hover::after { display: block; }
+    .tooltip-word:hover::after, .tooltip-word:focus::after, .tooltip-word.show-tip::after { display: block; }
     .tooltip-word.saved { color: var(--teal); border-bottom-style: solid; }
+    .keyword-chip { display: inline-block; margin: 10px 0 4px; padding: 7px 11px; border: 1px solid rgba(51, 92, 255, 0.22); border-radius: 999px; background: #eef3ff; color: var(--blue); font-weight: 800; }
     .dictionary-toolbar, .add-word-form { display: flex; flex-wrap: wrap; gap: 10px; padding: 0 22px 18px; }
     .dictionary-toolbar input, .dictionary-toolbar select, .add-word-form input, .add-word-form select {
       border: 1px solid var(--line);
@@ -784,6 +785,7 @@
           <div class="test-question">
             <strong>${index + 1}. ${escapeHtml(question.prompt)}</strong>
             <p>${renderSentenceWithTooltips(question.sentence, question.word, question.translation)}</p>
+            <p class="note">Söz ipucu: <span class="tooltip-word keyword-chip" role="button" tabindex="0" data-word="${escapeHtml(question.word)}" data-translation="${escapeHtml(question.translation)}">${escapeHtml(question.word)}</span></p>
             <p class="note">${escapeHtml(question.category)} üzrə kontekst sualı. Hər sözün üstünə mouse aparanda tərcümə görünür; sözə klikləsən, lüğətə əlavə olunur.</p>
             <div class="options" data-quiz data-correct="${escapeHtml(question.correct)}" data-word="${escapeHtml(question.word)}">
               ${question.options.map((option, optionIndex) => `<button class="option" type="button" data-choice="${escapeHtml(option)}">${letters[optionIndex]}. ${escapeHtml(option)}</button>`).join("")}
@@ -903,6 +905,7 @@
       const word = token.dataset.word || token.textContent.trim();
       const translation = token.dataset.translation;
       const added = addWordToDictionary(word, translation, "Şəxsi lüğət");
+      token.classList.toggle("show-tip");
       if (added) {
         token.classList.add("saved");
         token.dataset.translation = `${translation} · lüğətə əlavə edildi`;
