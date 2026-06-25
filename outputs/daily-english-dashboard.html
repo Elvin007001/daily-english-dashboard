@@ -496,9 +496,9 @@
     const state = JSON.parse(localStorage.getItem(storageKey) || '{"streak":5,"correct":0,"total":0,"difficult":[],"customWords":[]}');
     const syncCodeKey = "premiumVocabularyLabSyncCode";
     const cloudSyncConfig = {
-      enabled: false,
-      supabaseUrl: "",
-      supabaseAnonKey: "",
+      enabled: true,
+      supabaseUrl: "https://igflxncjgeqjkdusqfzt.supabase.co",
+      supabaseAnonKey: "sb_publishable_UcyiuXiLH-qS2z07Cq-d5g_zIOShsBf",
       table: "dashboard_sync"
     };
 
