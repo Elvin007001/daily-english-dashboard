@@ -1,6 +1,6 @@
 {
-  "dayIndex": 3,
-  "lastRunDate": "2026-06-24",
+  "dayIndex": 4,
+  "lastRunDate": "2026-06-25",
   "usedWords": [
     "Audit trail",
     "Materiality",
@@ -45,114 +45,129 @@
     "Commute",
     "Groceries",
     "Recipe",
-    "Errand"
+    "Errand",
+    "Compliance audit",
+    "Risk assessment",
+    "Internal control testing",
+    "Financial statement",
+    "Audit opinion",
+    "Two-factor authentication",
+    "Virtual private network",
+    "Load balancing",
+    "Intrusion detection system",
+    "Data mining",
+    "To catch up",
+    "On the go",
+    "Give a hand",
+    "Up to date",
+    "Hit the road"
   ],
   "currentWords": [
     {
-      "word": "Verification",
-      "translation": "Təsdiqləmə",
-      "pronunciation": "ˌvɛrɪfɪˈkeɪʃən",
-      "sentence": "Verification of financial statements is essential before approval.",
+      "word": "Compliance audit",
+      "translation": "Uyğunluq auditi",
+      "pronunciation": "kəmˈplaɪəns ˈɔːdɪt",
+      "sentence": "The compliance audit ensures the organization follows legal standards.",
       "category": "Maliyyə auditi"
     },
     {
-      "word": "Ledger",
-      "translation": "Əsas kitab",
-      "pronunciation": "ˈlɛdʒər",
-      "sentence": "The accountant updated the ledger at the end of the day.",
+      "word": "Risk assessment",
+      "translation": "Risk qiymətləndirilməsi",
+      "pronunciation": "rɪsk əˈsɛsmənt",
+      "sentence": "We performed a risk assessment before the financial audit.",
       "category": "Maliyyə auditi"
     },
     {
-      "word": "Variance",
-      "translation": "Fərq, dəyişiklik",
-      "pronunciation": "ˈvɛəriəns",
-      "sentence": "We analyzed the variance between budgeted and actual costs.",
+      "word": "Internal control testing",
+      "translation": "Daxili nəzarət testləri",
+      "pronunciation": "ɪnˈtɜrnəl kənˈtroʊl ˈtɛstɪŋ",
+      "sentence": "Internal control testing helps identify potential weaknesses.",
       "category": "Maliyyə auditi"
     },
     {
-      "word": "Depreciation",
-      "translation": "Amortizasiya",
-      "pronunciation": "dɪˌpriːʃiˈeɪʃən",
-      "sentence": "Depreciation of fixed assets affects the profit calculation.",
+      "word": "Financial statement",
+      "translation": "Maliyyə hesabatı",
+      "pronunciation": "fəˈnænʃəl ˈsteɪtmənt",
+      "sentence": "The auditor reviewed the company’s financial statements thoroughly.",
       "category": "Maliyyə auditi"
     },
     {
-      "word": "Accrual",
-      "translation": "Hesablama, toplanma",
-      "pronunciation": "əˈkruːəl",
-      "sentence": "Accrual accounting records revenues and expenses when they occur.",
+      "word": "Audit opinion",
+      "translation": "Audit rəyi",
+      "pronunciation": "ˈɔːdɪt əˈpɪnjən",
+      "sentence": "The auditor issued an unqualified audit opinion.",
       "category": "Maliyyə auditi"
     },
     {
-      "word": "Latency",
-      "translation": "Gecikmə",
-      "pronunciation": "ˈleɪtənsi",
-      "sentence": "High latency can slow down internet browsing.",
+      "word": "Two-factor authentication",
+      "translation": "İki faktorlu identifikasiya",
+      "pronunciation": "tuː ˈfæktər ɔːˌθɛntɪˈkeɪʃən",
+      "sentence": "Two-factor authentication increases security for user accounts.",
       "category": "IT"
     },
     {
-      "word": "Bandwidth",
-      "translation": "Zolaq eni",
-      "pronunciation": "ˈbændwɪθ",
-      "sentence": "The new plan offers more bandwidth for faster downloads.",
+      "word": "Virtual private network",
+      "translation": "Virtual şəxsi şəbəkə",
+      "pronunciation": "ˈvɜrʧuəl ˈpraɪvət ˈnɛtwɜrk",
+      "sentence": "We use a virtual private network to access company data remotely.",
       "category": "IT"
     },
     {
-      "word": "Protocol",
-      "translation": "Protokol",
-      "pronunciation": "ˈproʊtəˌkɑːl",
-      "sentence": "HTTP is the protocol used for web communication.",
+      "word": "Load balancing",
+      "translation": "Yük balanslaşdırma",
+      "pronunciation": "loʊd ˈbælənsiŋ",
+      "sentence": "Load balancing improves the performance of our web servers.",
       "category": "IT"
     },
     {
-      "word": "Cache",
-      "translation": "Keshləmə",
-      "pronunciation": "kæʃ",
-      "sentence": "Clearing the cache can fix loading issues in browsers.",
+      "word": "Intrusion detection system",
+      "translation": "İnsident aşkarlama sistemi",
+      "pronunciation": "ɪnˈtruːʒən dɪˈtɛkʃən ˈsɪstəm",
+      "sentence": "The intrusion detection system monitors network traffic for threats.",
       "category": "IT"
     },
     {
-      "word": "Indexing",
-      "translation": "İndeksləmə",
-      "pronunciation": "ˈɪndɛksɪŋ",
-      "sentence": "Indexing databases improves query performance.",
+      "word": "Data mining",
+      "translation": "Veri mədənçiliyi",
+      "pronunciation": "ˈdeɪtə ˈmaɪnɪŋ",
+      "sentence": "Data mining helps discover patterns in large datasets.",
       "category": "IT"
     },
     {
-      "word": "Commute",
-      "translation": "Gündəlik işə gedib-gəlmək",
-      "pronunciation": "kəˈmjuːt",
-      "sentence": "I commute to work by bus every day.",
+      "word": "To catch up",
+      "translation": "Yenilənmək, söhbət etmək",
+      "pronunciation": "tuː kæʧ ʌp",
+      "sentence": "Let’s grab coffee and catch up this weekend.",
       "category": "Gündəlik danışıq"
     },
     {
-      "word": "Groceries",
-      "translation": "Market alış-verişi",
-      "pronunciation": "ˈɡroʊsəriz",
-      "sentence": "She went to buy groceries after work.",
+      "word": "On the go",
+      "translation": "Hərəkətdə, tələsik",
+      "pronunciation": "ɑn ðə goʊ",
+      "sentence": "She’s always on the go with a busy schedule.",
       "category": "Gündəlik danışıq"
     },
     {
-      "word": "Appointment",
-      "translation": "Görüş",
-      "pronunciation": "əˈpɔɪntmənt",
-      "sentence": "I have a dentist appointment at 3 PM.",
+      "word": "Give a hand",
+      "translation": "Kömək etmək",
+      "pronunciation": "ɡɪv ə hænd",
+      "sentence": "Can you give me a hand with these boxes?",
       "category": "Gündəlik danışıq"
     },
     {
-      "word": "Recipe",
-      "translation": "Resept",
-      "pronunciation": "ˈrɛsəpi",
-      "sentence": "This recipe is great for a quick dinner.",
+      "word": "Up to date",
+      "translation": "Yenilənmiş, müasir",
+      "pronunciation": "ʌp tuː deɪt",
+      "sentence": "Make sure your software is up to date.",
       "category": "Gündəlik danışıq"
     },
     {
-      "word": "Errand",
-      "translation": "İş tapşırığı, məsələ",
-      "pronunciation": "ˈɛrənd",
-      "sentence": "I need to run some errands this afternoon.",
+      "word": "Hit the road",
+      "translation": "Yola çıxmaq",
+      "pronunciation": "hɪt ðə roʊd",
+      "sentence": "We decided to hit the road early to avoid traffic.",
       "category": "Gündəlik danışıq"
     }
   ],
-  "notes": "Keep UI Azerbaijani and taught words English. Do not repeat usedWords except review sections."
+  "notes": "Full dashboard functionality is preserved by updating the existing HTML template instead of regenerating simplified markup."
 }
