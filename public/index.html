@@ -841,6 +841,41 @@
       return Array.from(new Uint8Array(digest)).map((byte) => byte.toString(16).padStart(2, "0")).join("");
     }
 
+    function bytesToBase64(bytes) {
+      return btoa(String.fromCharCode(...bytes));
+    }
+
+    function base64ToBytes(value) {
+      return Uint8Array.from(atob(value), (char) => char.charCodeAt(0));
+    }
+
+    async function encryptionKeyFromCode(code) {
+      const material = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(`daily-english-dashboard:${code.trim()}`));
+      return crypto.subtle.importKey("raw", material, { name: "AES-GCM" }, false, ["encrypt", "decrypt"]);
+    }
+
+    async function encryptStateForCloud(value, code) {
+      const key = await encryptionKeyFromCode(code);
+      const iv = crypto.getRandomValues(new Uint8Array(12));
+      const encoded = new TextEncoder().encode(JSON.stringify(value));
+      const ciphertext = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, key, encoded);
+      return {
+        version: 1,
+        encrypted: true,
+        iv: bytesToBase64(iv),
+        ciphertext: bytesToBase64(new Uint8Array(ciphertext))
+      };
+    }
+
+    async function decryptStateFromCloud(value, code) {
+      if (!value?.encrypted) return value;
+      const key = await encryptionKeyFromCode(code);
+      const iv = base64ToBytes(value.iv);
+      const ciphertext = base64ToBytes(value.ciphertext);
+      const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, key, ciphertext);
+      return JSON.parse(new TextDecoder().decode(plain));
+    }
+
     function setCloudStatus(message, tone = "warning") {
       const status = document.getElementById("cloudSyncStatus");
       if (!status) return;
@@ -889,7 +924,8 @@
       if (!response.ok) throw new Error("Cloud state oxunmadı.");
       const rows = await response.json();
       if (rows[0]?.state) {
-        mergeStates(state, rows[0].state);
+        const remoteState = await decryptStateFromCloud(rows[0].state, code);
+        mergeStates(state, remoteState);
         saveState({ skipCloud: true });
         renderState();
       }
@@ -903,9 +939,10 @@
       if (!code) return false;
       const syncId = await syncIdFromCode(code);
       ensureStateShape();
+      const encryptedState = await encryptStateForCloud(state, code);
       const payload = [{
         sync_id: syncId,
-        state,
+        state: encryptedState,
         updated_at: new Date().toISOString()
       }];
       const url = `${cloudSyncConfig.supabaseUrl}/rest/v1/${cloudSyncConfig.table}?on_conflict=sync_id`;

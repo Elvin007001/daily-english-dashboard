@@ -253,7 +253,9 @@ function assertFullTemplate(html) {
     "inline-word",
     "cloudSyncConfig",
     "applySavedAnswers",
-    "syncCodeKey"
+    "syncCodeKey",
+    "encryptStateForCloud",
+    "decryptStateFromCloud"
   ];
   for (const marker of required) {
     if (!html.includes(marker)) {
@@ -275,7 +277,9 @@ function validateHtml(html) {
     "inline-word",
     "cloudSyncConfig",
     "applySavedAnswers",
-    "syncCodeKey"
+    "syncCodeKey",
+    "encryptStateForCloud",
+    "decryptStateFromCloud"
   ];
   for (const marker of required) {
     if (!html.includes(marker)) {
