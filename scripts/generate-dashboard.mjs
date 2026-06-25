@@ -227,7 +227,7 @@ function replaceJsArray(html, name, values) {
   const serialized = values.map((row) => Array.isArray(row)
     ? `      ${JSON.stringify(row)}`
     : `      ${JSON.stringify(row)}`).join(",\n");
-  const pattern = new RegExp(`const ${name} = \\\\[([\\\\s\\\\S]*?)\\\\n    \\\\];`);
+  const pattern = new RegExp(`const ${name} = \\[([\\s\\S]*?)\\n    \\];`);
   if (!pattern.test(html)) throw new Error(`JS array was not found: ${name}`);
   return html.replace(pattern, `const ${name} = [\n${serialized}\n    ];`);
 }
@@ -243,7 +243,7 @@ function replaceQuestionBank(html, name, words) {
     options: buildWordOptions(item, words, index)
   }));
   const serialized = questions.map((question) => `      ${JSON.stringify(question)}`).join(",\n");
-  const pattern = new RegExp(`const ${name} = \\\\[([\\\\s\\\\S]*?)\\\\n    \\\\];`);
+  const pattern = new RegExp(`const ${name} = \\[([\\s\\S]*?)\\n    \\];`);
   if (!pattern.test(html)) throw new Error(`Question bank was not found: ${name}`);
   return html.replace(pattern, `const ${name} = [\n${serialized}\n    ];`);
 }
