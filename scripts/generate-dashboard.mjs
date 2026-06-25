@@ -248,7 +248,9 @@ function assertFullTemplate(html) {
     "data-correct",
     "localStorage",
     "dictionaryModal",
-    "bindTooltipWords"
+    "bindTooltipWords",
+    "data-base-translation",
+    "inline-word"
   ];
   for (const marker of required) {
     if (!html.includes(marker)) {
@@ -265,7 +267,9 @@ function validateHtml(html) {
     "apple-mobile-web-app-capable",
     "Monthly Vocabulary Certificate",
     "data-open-tests",
-    "bindTooltipWords"
+    "bindTooltipWords",
+    "data-base-translation",
+    "inline-word"
   ];
   for (const marker of required) {
     if (!html.includes(marker)) {

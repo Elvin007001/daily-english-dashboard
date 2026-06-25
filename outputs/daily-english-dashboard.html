@@ -204,6 +204,7 @@
     }
     .tooltip-word:hover::after, .tooltip-word:focus::after, .tooltip-word.show-tip::after { display: block; }
     .tooltip-word.saved { color: var(--teal); border-bottom-style: solid; }
+    .inline-word { appearance: none; border: 0; border-bottom: 1px dashed currentColor; background: transparent; color: inherit; font: inherit; padding: 0; margin: 0; vertical-align: baseline; }
     .keyword-chip { display: inline-block; margin: 10px 0 4px; padding: 7px 11px; border: 1px solid rgba(51, 92, 255, 0.22); border-radius: 999px; background: #eef3ff; color: var(--blue); font-weight: 800; }
     .tap-translation { display: inline-block; margin-left: 8px; padding: 5px 9px; border-radius: 999px; background: #172033; color: #fff; font-size: 12px; font-weight: 800; vertical-align: middle; }
     .floating-tooltip { position: fixed; left: 0; top: 0; transform: translate(-50%, calc(-100% - 10px)); display: none; max-width: min(280px, calc(100vw - 32px)); padding: 9px 11px; border-radius: 12px; color: #fff; background: #172033; box-shadow: 0 14px 28px rgba(17, 24, 39, 0.25); font-size: 12px; font-weight: 800; z-index: 9999; pointer-events: none; }
@@ -744,7 +745,7 @@
         const isKeyword = normalizeWord(keyword) === clean;
         const translation = isKeyword ? keywordTranslation : translationForToken(part);
         if (!translation || translation === "Tərcümə əlavə edilməyib") return escapeHtml(part);
-        return `<span class="tooltip-word" role="button" tabindex="0" title="${escapeHtml(translation)}" data-word="${escapeHtml(part.replace(/^[^A-Za-z0-9-]+|[^A-Za-z0-9-]+$/g, ""))}" data-base-translation="${escapeHtml(translation)}" data-translation="${escapeHtml(translation)}">${escapeHtml(part)}</span>`;
+        return `<button class="tooltip-word inline-word" type="button" title="${escapeHtml(translation)}" data-word="${escapeHtml(part.replace(/^[^A-Za-z0-9-]+|[^A-Za-z0-9-]+$/g, ""))}" data-base-translation="${escapeHtml(translation)}" data-translation="${escapeHtml(translation)}">${escapeHtml(part)}</button>`;
       }).join("");
     }
 
